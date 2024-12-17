@@ -10,11 +10,11 @@ namespace BookManagement.mapper
 {
     internal class PurchaseOrderDetailMapper
     {
-        public List<PurchaseOrderDetail> GetPurchaseOrderDetails()
+        public static List<PurchaseOrderDetail> GetPurchaseOrderDetails()
         {
             return DatabaseService.Instance.Db.Queryable<PurchaseOrderDetail>().ToList();
         }
-        public  PurchaseOrderDetail GetPurchaseOrderDetailById(int id)
+        public static PurchaseOrderDetail GetPurchaseOrderDetailById(int id)
         {
             return DatabaseService.Instance.Db.Queryable<PurchaseOrderDetail>().Where(it => it.PurchaseOrderDetailId == id).First();
         }

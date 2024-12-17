@@ -10,15 +10,15 @@ namespace BookManagement.mapper
 {
     internal class PurchaseOrderMapper
     {
-        public List<PurchaseOrder> GetPurchaseOrders()
+        public static List<PurchaseOrder> GetPurchaseOrders()
         {
             return DatabaseService.Instance.Db.Queryable<PurchaseOrder>().ToList();
         }
-        public  PurchaseOrder GetPurchaseOrderById(int id)
+        public static PurchaseOrder GetPurchaseOrderById(int id)
         {
             return DatabaseService.Instance.Db.Queryable<PurchaseOrder>().Where(it => it.PurchaseOrderId == id).First();
         }
-        public  List<PurchaseOrder> GetPagedPurchaseOrders(int pageIndex, int pageSize)
+        public static List<PurchaseOrder> GetPagedPurchaseOrders(int pageIndex, int pageSize)
         {
             return DatabaseService.Instance.Db.Queryable<PurchaseOrder>()
                                               .Skip((pageIndex - 1) * pageSize)
