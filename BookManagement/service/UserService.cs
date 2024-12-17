@@ -14,5 +14,16 @@ namespace BookManagement.service
         {
             return UserMapper.getUserById(userId);
         }
+        public  List<User> GetUsers()
+        {
+            return UserMapper.getUsers();
+        }
+        public  void DeleteUser(string userId) {
+             UserMapper.deleteUser(userId);
+        }
+        public  void UpdateUser(User user)
+        {
+            UserMapper.updateUser(user);
+        }
     }
 }
