@@ -21,18 +21,18 @@ namespace BookManagement.page
     /// </summary>
     public partial class UserManagementPage : Page
     {
-        private readonly UserService _dbOps;
+        private readonly UserService userService;
         public UserManagementPage()
         {
             InitializeComponent();
-            _dbOps = new UserService();
+            userService = new UserService();
             LoadUsers();
         }
 
         // Load users from the database
         private void LoadUsers()
         {
-            //UserDataGrid.ItemsSource = _dbOps.GetUsers(); // Bind users to DataGrid
+            UserDataGrid.ItemsSource = userService.GetUsers(); // Bind users to DataGrid
         }
 
         // Edit button click event
@@ -68,7 +68,7 @@ namespace BookManagement.page
                 var result = MessageBox.Show($"你确定删除用户 {user.username}吗?", "Confirm Deletion", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    //_dbOps.DeleteUser(user.userId); // Delete user by userId
+                    userService.DeleteUser(user.userId); // Delete user by userId
                     LoadUsers(); // Reload user list after deletion
                 }
             }
