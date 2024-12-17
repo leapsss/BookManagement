@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 具体调用方法如下：*/
 
 
-namespace BookManagement.entity
+namespace BookManagement.util
 {
     public static class Session
     {

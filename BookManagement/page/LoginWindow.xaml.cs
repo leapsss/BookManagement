@@ -1,7 +1,4 @@
-﻿
-
-using BookManagement.entity;
-using BookManagement.page;
+﻿using BookManagement.page;
 using BookManagement.util;
 using System;
 using System.Windows;
@@ -42,8 +39,9 @@ namespace BookManagement.page
                     Session.SetCurrentUserId(user.userId);
 
                     MessageBox.Show("登录成功！");
+                    LayoutWindow layoutWindow = new LayoutWindow();
+                    layoutWindow.Show();
 
-                    NavigateToRolePage(user.role);
                     this.Close();
                 }
                 else
@@ -88,31 +86,5 @@ namespace BookManagement.page
             }
         }
 
-        private void NavigateToRolePage(string role)
-        {
-            switch (role.ToLower())
-            {
-                case "admin":
-                    Console.WriteLine("AdminWindow");  // 输出并换行
-                    /*OpenPage(new AdminWindow());*/
-                    break;
-                case "purchasers":
-                    Console.WriteLine("PurchaseWindow");  // 输出并换行
-                    /*OpenPage(new PurchaseWindow());*/
-                    break;
-                case "salesperson":
-                    Console.WriteLine("SalesWindow");  // 输出并换行
-                    /*OpenPage(new SalesWindow());*/
-                    break;
-                default:
-                    MessageBox.Show("未识别的角色，无法跳转！");
-                    break;
-            }
-        }
-
-        private void OpenPage(Window window)
-        {
-            window.Show();
-        }
     }
 }
