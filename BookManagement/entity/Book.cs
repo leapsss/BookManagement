@@ -5,7 +5,7 @@ namespace BookManagement.entity
     [SugarTable("book")] // 表名与数据库中的表名对应
     public class Book
     {
-        [SugarColumn(IsPrimaryKey = true)] // 主键，自动增长
+        [SugarColumn(IsPrimaryKey = true)] // 主键
         public string isbn { get; set; }
         public string author { get; set; }
         public string bookName { get; set; }
