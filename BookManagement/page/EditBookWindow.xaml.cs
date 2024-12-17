@@ -38,5 +38,9 @@ namespace BookManagement.page
             PriceTextBox.Text = _book.price.ToString();
             BookDescTextBox.Text = _book.bookDesc;
         }
+        public void SubmitButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
