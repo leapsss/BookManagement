@@ -5,8 +5,6 @@ namespace BookManagement.service
 {
     public class BookService
     {
-        
-
         public BookService() { }
 
         public void addBook(Book book)
