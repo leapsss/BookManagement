@@ -14,11 +14,13 @@ namespace BookManagement.page
         public BookManagementPage()
         {
             InitializeComponent();
+            showBookInfo();
         }
         public void showBookInfo()
         {
             BookService bookService = new BookService();
             List<Book> books = bookService.getAllBooks();
+
         }
     }
 }
