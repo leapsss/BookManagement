@@ -13,7 +13,7 @@ namespace BookManagement.entity
         public string pressDate { get; set; }
         public string picture { get; set; }
         public string clcName { get; set; }
-        public int price { get; set; }
+        public decimal price { get; set; }
         public string bookDesc { get; set; }
         public string language { get; set; }
     }

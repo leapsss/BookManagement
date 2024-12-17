@@ -8,73 +8,45 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="BookManagementPage">
     <Grid>
-        <TabControl>
-            <!-- 数据展示 Tab -->
-            <TabItem Header="书籍列表">
-                <StackPanel>
-                    <ListView x:Name="BooksListView" Margin="10" Height="150">
-                        <!-- 定义列 -->
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn Header="ISBN" DisplayMemberBinding="{Binding ISBN}" Width="100"/>
-                                <GridViewColumn Header="书名" DisplayMemberBinding="{Binding BookName}" Width="100"/>
-                                <GridViewColumn Header="作者" DisplayMemberBinding="{Binding Author}" Width="90"/>
-                                <GridViewColumn Header="出版社" DisplayMemberBinding="{Binding Press}" Width="100"/>
-                                <GridViewColumn Header="出版日期" DisplayMemberBinding="{Binding PressDate}" Width="90"/>
-                                <GridViewColumn Header="分类" DisplayMemberBinding="{Binding ClcName}" Width="100"/>
-                                <GridViewColumn Header="定价" DisplayMemberBinding="{Binding Price}" Width="80"/>
-                                <GridViewColumn Header="详情" DisplayMemberBinding="{Binding BookDesc}" Width="180"/>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
-                </StackPanel>
-            </TabItem>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="销售订单管理" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <TextBox Width="200" Margin="0,0,10,0" VerticalContentAlignment="Center"/>
+                <Button Content="搜索" Width="80" Height="30"/>
+            </StackPanel>
+        </Grid>
 
-            <!-- 添加书籍 Tab -->
-            <TabItem Header="添加书籍">
-                <StackPanel Margin="10">
-                    <TextBlock Text="书名" Margin="5"/>
-                    <TextBox x:Name="TitleTextBox" Margin="5"/>
-
-                    <TextBlock Text="作者" Margin="5"/>
-                    <TextBox x:Name="AuthorTextBox" Margin="5"/>
-
-                    <TextBlock Text="出版社" Margin="5"/>
-                    <TextBox x:Name="PublisherTextBox" Margin="5"/>
-
-                    <TextBlock Text="ISBN" Margin="5"/>
-                    <TextBox x:Name="ISBNTextBox" Margin="5"/>
-
-                    <TextBlock Text="定价" Margin="5"/>
-                    <TextBox x:Name="PriceTextBox" Margin="5"/>
-
-                    <Button Content="添加书籍" Margin="10" Click="addBookButton_Click"/>
-                </StackPanel>
-            </TabItem>
-
-            <!-- 更新书籍 Tab -->
-            <TabItem Header="修改书籍">
-                <StackPanel Margin="10">
-                    <TextBlock Text="选择要修改的书籍" Margin="5"/>
-                    <ComboBox x:Name="BookComboBox" Margin="5"/>
-                    <TextBlock Text="书名" Margin="5"/>
-                    <TextBox x:Name="EditTitleTextBox" Margin="5"/>
-
-                    <TextBlock Text="作者" Margin="5"/>
-                    <TextBox x:Name="EditAuthorTextBox" Margin="5"/>
-
-                    <TextBlock Text="出版社" Margin="5"/>
-                    <TextBox x:Name="EditPublisherTextBox" Margin="5"/>
-
-                    <TextBlock Text="ISBN" Margin="5"/>
-                    <TextBox x:Name="EditISBNTextBox" Margin="5"/>
-
-                    <TextBlock Text="定价" Margin="5"/>
-                    <TextBox x:Name="EditPriceTextBox" Margin="5"/>
-
-                    <Button Content="修改书籍" Margin="10" Click="editBookButton_Click"/>
-                </StackPanel>
-            </TabItem>
-        </TabControl>
+        <!-- 工具栏 -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,20">
+            <Button Content="新增" Width="80" Height="30" Margin="0,0,10,0" Background="#27AE60" Foreground="White" BorderThickness="0" Click="addBookButton_Click"/>
+            <Button Content="编辑" Width="80" Height="30" Margin="0,0,10,0" Click="editBookButton_Click"/>
+            <Button Content="删除" Width="80" Height="30" Margin="0,0,10,0" Click="deleteBookButton_Click"/>
+        </StackPanel>
+        
+        <DataGrid Grid.Row="2" x:Name="BookDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
+                  CanUserDeleteRows="False" CanUserReorderColumns="False" IsReadOnly="True" CanUserResizeRows="False" 
+                  CanUserSortColumns="True" SelectionMode="Single" SelectedItem="{Binding SelectedBook}"
+                  AlternatingRowBackground="#F2F2F2" RowHeaderWidth="0">
+            
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ISBN" Binding="{Binding isbn}" Width="130"/>
+                <DataGridTextColumn Header="书名" Binding="{Binding bookName}" Width="80"/>
+                <DataGridTextColumn Header="作者" Binding="{Binding author}" Width="70"/>
+                <DataGridTextColumn Header="出版社" Binding="{Binding press}" Width="100"/>
+                <DataGridTextColumn Header="出版日期" Binding="{Binding pressDate}" Width="75"/>
+                <DataGridTextColumn Header="分类" Binding="{Binding clcName}" Width="120"/>
+                <DataGridTextColumn Header="定价" Binding="{Binding price}" Width="55"/>
+                <DataGridTextColumn Header="详情" Binding="{Binding bookDesc}"/>              
+            </DataGrid.Columns>
+        </DataGrid>       
     </Grid>
 </Page>

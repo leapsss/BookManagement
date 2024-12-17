@@ -1,11 +1,13 @@
 ﻿using BookManagement.entity;
 using BookManagement.mapper;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace BookManagement.service
 {
     public class BookService
     {
         
+
         public BookService() { }
 
         public void addBook(Book book)
@@ -15,12 +17,19 @@ namespace BookManagement.service
 
         public Book getBookByISBN(string isbn)
         {
-            return BookMapper.getBookByISBN(isbn);
+            Book book = BookMapper.getBookByISBN(isbn);
+            book.price /= 100.0m;
+            return book;
         }
 
         public List<Book> getAllBooks()
         {
-            return BookMapper.getAllBooks();
+            List<Book> books = BookMapper.getAllBooks();
+            foreach (var book in books)
+            {
+                book.price = book.price / 100.0m;  // 将 Price 转换为小数形式
+            }
+            return books;
         }
 
     }
