@@ -22,11 +22,12 @@ namespace BookManagement.page
     public partial class UserUpdateWindow : Window
     {
         public User CurrentUser { get; set; }
-        private readonly UserService _dbOps;
+        private readonly UserService userService;
         public UserUpdateWindow(User user)
         {
             InitializeComponent();
             CurrentUser = user;
+            userService = new UserService();
             // Populate the fields with the user data
             UsernameTextBox.Text = user.username;
             PasswordBox.Password = user.password;
@@ -39,7 +40,7 @@ namespace BookManagement.page
             CurrentUser.username = UsernameTextBox.Text;
             CurrentUser.password = PasswordBox.Password;
             CurrentUser.role = RoleTextBox.Text;
-            _dbOps.UpdateUser(CurrentUser);
+            userService.UpdateUser(CurrentUser);
             // Close the window
             this.DialogResult = true;
             this.Close();

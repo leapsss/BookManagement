@@ -13,14 +13,13 @@
                   CanUserAddRows="False" SelectionMode="Single">
             <DataGrid.Columns>
                 <!-- UserId Column -->
-                <DataGridTextColumn Header="User ID" Binding="{Binding userId}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="用户id" Binding="{Binding userId}" IsReadOnly="True" Width="*"/>
 
                 <!-- UserName Column -->
-                <DataGridTextColumn Header="Username" Binding="{Binding username}" Width="*"/>
+                <DataGridTextColumn Header="用户名" Binding="{Binding username}" Width="*"/>
 
                 <!-- Role Column -->
-                <DataGridTextColumn Header="Role" Binding="{Binding role}" Width="*"/>
-                <DataGridTextColumn Header="Role" Binding="{Binding CreatedAt}" Width="*"/>
+                <DataGridTextColumn Header="角色" Binding="{Binding role}" Width="*"/>
                 <!-- Action Column with Buttons -->
                 <DataGridTemplateColumn Header="Actions" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
