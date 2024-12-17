@@ -20,6 +20,14 @@ namespace BookManagement.page
         {
             BookService bookService = new BookService();
             List<Book> books = bookService.getAllBooks();
+            BooksListView.ItemsSource = books;
+        }
+        public void addBookButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        public void editBookButton_Click(object sender, RoutedEventArgs e)
+        {
 
         }
     }
