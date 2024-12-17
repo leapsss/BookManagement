@@ -1,9 +1,5 @@
-﻿
-
-using BookManagement.entity;
-using BookManagement.page;
+﻿using BookManagement.entity;
 using BookManagement.util;
-using System;
 using System.Windows;
 
 namespace BookManagement.page
@@ -75,39 +71,17 @@ namespace BookManagement.page
             return true;
         }
 
-        private BookManagement.entity.users GetUserById(int userId)
+        private BookManagement.entity.User GetUserById(int userId)
         {
             try
             {
-                return _databaseService.Db.Queryable<BookManagement.entity.users>()
+                return _databaseService.Db.Queryable<BookManagement.entity.User>()
                                            .First(u => u.userId == userId);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"查询用户时出错: {ex.Message}");
                 return null;
-            }
-        }
-
-        private void NavigateToRolePage(string role)
-        {
-            switch (role.ToLower())
-            {
-                case "admin":
-                    Console.WriteLine("AdminWindow");  // 输出并换行
-                    /*OpenPage(new AdminWindow());*/
-                    break;
-                case "purchasers":
-                    Console.WriteLine("PurchaseWindow");  // 输出并换行
-                    /*OpenPage(new PurchaseWindow());*/
-                    break;
-                case "salesperson":
-                    Console.WriteLine("SalesWindow");  // 输出并换行
-                    /*OpenPage(new SalesWindow());*/
-                    break;
-                default:
-                    MessageBox.Show("未识别的角色，无法跳转！");
-                    break;
             }
         }
 
