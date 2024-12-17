@@ -13,7 +13,9 @@ namespace BookManagement.util
         {
             _db = new SqlSugarClient(new ConnectionConfig()
             {
-                ConnectionString = "Server=52.194.237.192;Port=32750;Database=book;Uid=postgres;Pwd=9#327.5",
+                //ConnectionString = "Server=52.194.237.192;Port=32750;Database=book;Uid=postgres;Pwd=9#327.5",
+                //todo remove test database
+                ConnectionString = "Server=localhost;Port=5432;Database=book;Uid=postgres;Pwd=1234",
                 DbType = DbType.PostgreSQL,
                 IsAutoCloseConnection = true,
                 InitKeyType = InitKeyType.Attribute
