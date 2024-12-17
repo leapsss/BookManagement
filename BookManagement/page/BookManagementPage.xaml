@@ -13,23 +13,20 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        
         <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-            </Grid.ColumnDefinitions>
             <TextBlock Text="销售订单管理" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
-            <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <TextBox Width="200" Margin="0,0,10,0" VerticalContentAlignment="Center"/>
-                <Button Content="搜索" Width="80" Height="30"/>
-            </StackPanel>
         </Grid>
 
-        <!-- 工具栏 -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,20">
             <Button Content="新增" Width="80" Height="30" Margin="0,0,10,0" Background="#27AE60" Foreground="White" BorderThickness="0" Click="addBookButton_Click"/>
             <Button Content="编辑" Width="80" Height="30" Margin="0,0,10,0" Click="editBookButton_Click"/>
             <Button Content="删除" Width="80" Height="30" Margin="0,0,10,0" Click="deleteBookButton_Click"/>
+            <StackPanel  Orientation="Horizontal" Margin="100,0,0,0">
+                <Label Content="ISBN:" Width="46" FontSize="12" VerticalAlignment="Center"/>
+                <TextBox Name="ISBNTextBox" Width="150" Margin="0,0,10,0" VerticalContentAlignment="Center"/>
+                <Button Content="搜索" Width="80" Height="30" Click="getBookButton_Click"/>
+            </StackPanel>
         </StackPanel>
         
         <DataGrid Grid.Row="2" x:Name="BookDataGrid" AutoGenerateColumns="False" CanUserAddRows="False" 
@@ -44,8 +41,8 @@
                 <DataGridTextColumn Header="出版社" Binding="{Binding press}" Width="100"/>
                 <DataGridTextColumn Header="出版日期" Binding="{Binding pressDate}" Width="75"/>
                 <DataGridTextColumn Header="分类" Binding="{Binding clcName}" Width="120"/>
-                <DataGridTextColumn Header="定价" Binding="{Binding price}" Width="55"/>
-                <DataGridTextColumn Header="详情" Binding="{Binding bookDesc}"/>              
+                <DataGridTextColumn Header="定价" Binding="{Binding price,StringFormat=N2}" Width="55"/>
+                <DataGridTextColumn Header="详情" Binding="{Binding bookDesc}" Width="500"/>              
             </DataGrid.Columns>
         </DataGrid>       
     </Grid>

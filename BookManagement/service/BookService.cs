@@ -15,6 +15,14 @@ namespace BookManagement.service
             BookMapper.addBook(book);
         }
 
+        public void deleteBook(string isbn)
+        {
+            BookMapper.deleteBookByISBN(isbn);
+        }
+        public void updateBook(Book book)
+        {
+            BookMapper.updateBook(book);
+        }
         public Book getBookByISBN(string isbn)
         {
             Book book = BookMapper.getBookByISBN(isbn);
