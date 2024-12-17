@@ -1,17 +1,6 @@
 ﻿using BookManagement.entity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BookManagement.service;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace BookManagement.page
 {
@@ -30,17 +19,29 @@ namespace BookManagement.page
             _book = book;
             // 初始化文本框，显示当前选中的书籍信息
             ISBNTextBox.Text = _book.isbn;
-            BookNameTextBox.Text = _book.bookName;
-            AuthorTextBox.Text = _book.author;
-            PressTextBox.Text = _book.press;
-            PressDateTextBox.Text = _book.pressDate;
-            ClcNameTextBox.Text = _book.clcName;
-            PriceTextBox.Text = _book.price.ToString();
-            BookDescTextBox.Text = _book.bookDesc;
+            bookNameTextBox.Text = _book.bookName;
+            authorTextBox.Text = _book.author;
+            pressTextBox.Text = _book.press;
+            pressDateTextBox.Text = _book.pressDate;
+            clcNameTextBox.Text = _book.clcName;
+            priceTextBox.Text = _book.price.ToString();
+            bookDescTextBox.Text = _book.bookDesc;
         }
         public void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
+            _book.isbn = ISBNTextBox.Text;
+            _book.bookName = bookNameTextBox.Text;
+            _book.author = authorTextBox.Text;
+            _book.press = pressTextBox.Text;
+            _book.pressDate = pressDateTextBox.Text;
+            _book.clcName = clcNameTextBox.Text;          
+            _book.price = (int)(Convert.ToDecimal(priceTextBox.Text) * 100);
+            _book.bookDesc = bookDescTextBox.Text;
 
+            BookService bookService = new BookService();
+            bookService.updateBook(_book);
+            this.DialogResult = true;
+            this.Close();            
         }
     }
 }
