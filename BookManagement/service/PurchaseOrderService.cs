@@ -10,22 +10,25 @@ namespace BookManagement.service
 {
     internal class PurchaseOrderService
     {
-        public PurchaseOrderService() { }
+        private readonly PurchaseOrderMapper purchaseOrderMapper;
+        public PurchaseOrderService() {
+            purchaseOrderMapper = new PurchaseOrderMapper();
+        }
         public List<PurchaseOrder> GetPurchaseOrders()
         {
-            return PurchaseOrderMapper.GetPurchaseOrders();
+            return purchaseOrderMapper.GetPurchaseOrders();
         }
         public PurchaseOrder GetPurchaseOrderById(int id)
         {
-            return PurchaseOrderMapper.GetPurchaseOrderById(id);
+            return purchaseOrderMapper.GetPurchaseOrderById(id);
         }
         public List<PurchaseOrder> GetPagedPurchaseOrders(int pageIndex, int pageSize)
         {
-            return PurchaseOrderMapper.GetPagedPurchaseOrders(pageIndex, pageSize);
+            return purchaseOrderMapper.GetPagedPurchaseOrders(pageIndex, pageSize);
         }
         public List<PurchaseOrder> GetFilteredPurchaseOrders(string orderId, string supplierId, string purchaserId, DateTime? startDate, DateTime? endDate)
         {
-            var query = PurchaseOrderMapper.GetPurchaseOrders().AsQueryable();
+            var query = purchaseOrderMapper.GetPurchaseOrders().AsQueryable();
 
             if (!string.IsNullOrEmpty(orderId))
                 query = query.Where(po => po.PurchaseOrderId.ToString().Contains(orderId)); // 使用ToString()转换为字符串后进行匹配

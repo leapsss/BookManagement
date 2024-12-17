@@ -10,18 +10,21 @@ namespace BookManagement.service
 {
     internal class PurchaseOrderDetailService
     {
-        public PurchaseOrderDetailService() { }
+        private readonly PurchaseOrderDetailMapper purchaseOrderDetailMapper;
+        public PurchaseOrderDetailService() {
+            purchaseOrderDetailMapper = new PurchaseOrderDetailMapper();
+        }
         public List<PurchaseOrderDetail> GetPurchaseOrderDetails()
         {
-            return PurchaseOrderDetailMapper.GetPurchaseOrderDetails();
+            return purchaseOrderDetailMapper.GetPurchaseOrderDetails();
         }
         public  PurchaseOrderDetail GetPurchaseOrderDetailById(int id)
         {
-            return PurchaseOrderDetailMapper.GetPurchaseOrderDetailById(id);
+            return purchaseOrderDetailMapper.GetPurchaseOrderDetailById(id);
         }
         public List<PurchaseOrderDetail> GetPurchaseOrderDetails(string orderId, string supplierId, decimal? minPrice, decimal? maxPrice)
         {
-            return PurchaseOrderDetailMapper.GetPurchaseOrderDetails()
+            return purchaseOrderDetailMapper.GetPurchaseOrderDetails()
                 .Where(po =>
                     (string.IsNullOrEmpty(orderId) || po.PurchaseOrderId.ToString().Contains(orderId)) &&
                     (!minPrice.HasValue || po.Price >= minPrice) &&

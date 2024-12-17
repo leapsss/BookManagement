@@ -10,23 +10,23 @@ namespace BookManagement.mapper
 {
     class UserMapper
     {
-        public static List<User> GetUsers()
+        public  List<User> GetUsers()
         {
             return DatabaseService.Instance.Db.Queryable<User>().ToList();
         }
-        public static User GetUserById(string id)
+        public  User GetUserById(string id)
         {
             return DatabaseService.Instance.Db.Queryable<User>().Where(it => it.userId == id).First();
         }
-        public static void UpdateUser(User user)
+        public  void UpdateUser(User user)
         {
             DatabaseService.Instance.Db.Updateable(user).ExecuteCommand();
         }
-        public static void DeleteUser(string id)
+        public void DeleteUser(string id)
         {
             DatabaseService.Instance.Db.Deleteable<User>().Where(it => it.userId == id).ExecuteCommand();
         }
-        public static void AddUser(User user)
+        public  void AddUser(User user)
         {
             DatabaseService.Instance.Db.Insertable(user).ExecuteCommand();
         }
