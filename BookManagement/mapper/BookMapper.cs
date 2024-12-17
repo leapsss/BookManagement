@@ -1,32 +1,28 @@
 ﻿using BookManagement.entity;
 using BookManagement.util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BookManagement.repository
+namespace BookManagement.mapper
 {
-    public class BookRepository
+    public class BookMapper
     {
-        public void Add(Book book)
+        public static void addBook(Book book)
         {
             DatabaseService.Instance.Db.Insertable(book).ExecuteCommand();
         }
-        public void Update(Book book)
+        public static void updateBook(Book book)
         {
             DatabaseService.Instance.Db.Updateable(book).ExecuteCommand();
         }
-        public void DeleteByISBN(string isbn)
+        public static void deleteBookByISBN(string isbn)
         {
             DatabaseService.Instance.Db.Deleteable<Book>().Where(it => it.isbn == isbn).ExecuteCommand();
         }
-        public Book GetByISBN(string isbn) {
+        public static Book getBookByISBN(string isbn)
+        {
             return DatabaseService.Instance.Db.Queryable<Book>().Where(it => it.isbn == isbn).First();
         }
 
-        public List<Book> GetAll()
+        public static List<Book> getAllBooks()
         {
             return DatabaseService.Instance.Db.Queryable<Book>().ToList();
         }
