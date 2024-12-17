@@ -1,4 +1,5 @@
 ﻿using BookManagement.entity;
+using BookManagement.service;
 using BookManagement.util;
 using System.Windows;
 
@@ -23,8 +24,11 @@ namespace BookManagement.page
                 // 获取单例实例
                 var db = DatabaseService.Instance.Db;
 
+                var bookService = new BookService();
+
+
                 // 测试查询所有书籍
-                List<Book> books = db.Queryable<Book>().ToList();
+                List<Book> books = bookService.GetAllBooks();
 
                 // 打印查询结果到控制台
                 foreach (var book in books)
