@@ -5,9 +5,54 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookManagement.page"
         mc:Ignorable="d"
-        Title="LayoutWindow" Height="450" Width="800">
-    <Grid>
-        <TextBox HorizontalAlignment="Center" Margin="0,190,0,0" TextWrapping="Wrap" Text="登陆成功后跳转页面" VerticalAlignment="Top" Width="186" TextChanged="TextBox_TextChanged" FontSize="20"/>
+        Title="图书进销存管理系统" Height="600" Width="1000">
+    <Window.Resources>
+        <Style x:Key="MenuButtonStyle" TargetType="Button">
+            <EventSetter Event="Click" Handler="Router"/>
+            <Setter Property="Background" Value="#34495E"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="5">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#2980B9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
 
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- 左侧导航栏 -->
+        <StackPanel Grid.Column="0" Background="#2C3E50">         
+            <TextBlock Text="图书进销存管理系统" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="10,20,10,30"/>
+            <Button Content="书籍管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="销售管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="库存管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="供货商管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="报表中心" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="系统设置" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="用户管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="供货单信息" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="供货单明细" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+        </StackPanel>
+
+        <!-- 主工作区 -->
+        <Grid Grid.Column="1" Margin="20">
+            <Frame NavigationUIVisibility="Hidden" Name="hosFrame">
+            </Frame>
+        </Grid>
     </Grid>
 </Window>

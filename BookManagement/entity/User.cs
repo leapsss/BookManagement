@@ -8,10 +8,10 @@ using System.Threading.Tasks;
 namespace BookManagement.entity
 {
     [SugarTable("users")]
-    public class users
+    public class User
     {
         [SugarColumn(IsPrimaryKey = true)]
-        public int userId { get; set; }
+        public string userId { get; set; }
 
         public string username { get; set; }
 
