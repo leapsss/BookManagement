@@ -1,0 +1,48 @@
+﻿<Page x:Class="BookManagement.page.InventoryManagementPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookManagement.page"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="InventoryManagementPage">
+    <Grid>
+        <TabControl>
+            <!-- 数据展示 Tab -->
+            <TabItem Header="库存列表">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
+                        <TextBox x:Name="SearchIsbnTextBox" Width="300" ToolTip="输入ISBN查询" />
+                        <Button Content="查询" Width="100" Height="30" Margin="10,0,0,0" Click="SearchButton_Click"/>
+                    </StackPanel>
+
+                    <ListView x:Name="InventoryListView" Margin="10">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="库存ID" DisplayMemberBinding="{Binding InventoryId}" Width="100"/>
+                                <GridViewColumn Header="ISBN" DisplayMemberBinding="{Binding Isbn}" Width="100"/>
+                                <GridViewColumn Header="库存数量" DisplayMemberBinding="{Binding Quantity}" Width="100"/>
+                                <GridViewColumn Header="最后更新时间" DisplayMemberBinding="{Binding LastUpdated}" Width="150"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </TabItem>
+
+            <!-- 库存管理 Tab -->
+            <TabItem Header="库存管理">
+                <StackPanel Margin="10">
+                    <TextBlock Text="ISBN" Margin="5"/>
+                    <TextBox x:Name="IsbnTextBox" Margin="5"/>
+
+                    <TextBlock Text="数量" Margin="5"/>
+                    <TextBox x:Name="QuantityTextBox" Margin="5"/>
+
+                    <Button Content="入库" Width="100" Height="30" Margin="10" Click="AddInventoryButton_Click"/>
+                    <Button Content="出库" Width="100" Height="30" Margin="10" Click="RemoveInventoryButton_Click"/>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>
