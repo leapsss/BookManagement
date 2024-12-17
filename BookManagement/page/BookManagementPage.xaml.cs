@@ -20,17 +20,18 @@ namespace BookManagement.page
         {
             BookService bookService = new BookService();
             List<Book> books = bookService.getAllBooks();
-            foreach (var book in books)
-            {
-                MessageBox.Show($"ISBN: {book.isbn}, 书名: {book.bookName}, 作者: {book.author}, 价格: {book.price}");
-            }
-            BooksListView.ItemsSource = books;
+            BookDataGrid.ItemsSource = books;
         }
         public void addBookButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
         public void editBookButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        
+        public void deleteBookButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
