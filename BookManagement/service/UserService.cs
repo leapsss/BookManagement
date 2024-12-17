@@ -1,5 +1,4 @@
 ﻿using BookManagement.entity;
-using BookManagement.mapper;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -11,30 +10,38 @@ namespace BookManagement.service
 {
     public class UserService
     {
-        private readonly UserMapper userMapper;
+        private SqlSugarScope _db;
+
         public UserService()
         {
-            userMapper = new UserMapper();
+            // 初始化 SqlSugar 数据库连接（修改连接字符串为你的数据库信息）
+            _db = new SqlSugarScope(new ConnectionConfig()
+            {
+                ConnectionString = "Server=52.194.237.192;Port=32750;Database=book;Uid=postgres;Pwd=9#327.5",
+                DbType = DbType.PostgreSQL,
+                IsAutoCloseConnection = true,
+                InitKeyType = InitKeyType.Attribute
+            });
         }
         public List<User> GetUsers()
         {
-            return userMapper.GetUsers();
+            return _db.Queryable<User>().ToList();
         }
         public User GetUserById(int id)
         {
-            return userMapper.GetUserById(id);
+            return _db.Queryable<User>().Where(it => it.userId == id).First();
         }
         public void UpdateUser(User user)
         {
-            userMapper.UpdateUser(user);
+            _db.Updateable(user).ExecuteCommand();
         }
         public void DeleteUser(int id)
         {
-            userMapper.DeleteUser(id);
+            _db.Deleteable<User>().Where(it => it.userId == id).ExecuteCommand();
         }
         public void AddUser(User user)
         {
-            userMapper.AddUser(user);
+            _db.Insertable(user).ExecuteCommand();
         }
 
 

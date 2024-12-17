@@ -1,4 +1,4 @@
-﻿<Page x:Class="BookManagement.page.PurchaseOrderDetailPage"
+﻿<Page x:Class="BookManagement.page.UserManagementPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -9,18 +9,18 @@
       Title="UserManagementPage">
 
     <Grid>
-        <DataGrid Name="PurchaseOrderDetailDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+        <DataGrid Name="UserDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                   CanUserAddRows="False" SelectionMode="Single">
             <DataGrid.Columns>
                 <!-- UserId Column -->
-                <DataGridTextColumn Header="订单编号" Binding="{Binding PurchaseOrderId}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="User ID" Binding="{Binding userId}" IsReadOnly="True" Width="*"/>
 
                 <!-- UserName Column -->
-                <DataGridTextColumn Header="ISBN编码" Binding="{Binding SupplierId}" Width="*"/>
+                <DataGridTextColumn Header="Username" Binding="{Binding username}" Width="*"/>
 
                 <!-- Role Column -->
-                <DataGridTextColumn Header="数量" Binding="{Binding amount}" Width="*"/>
-                <DataGridTextColumn Header="进价" Binding="{Binding price}" Width="*"/>
+                <DataGridTextColumn Header="Role" Binding="{Binding role}" Width="*"/>
+                <DataGridTextColumn Header="Role" Binding="{Binding CreatedAt}" Width="*"/>
                 <!-- Action Column with Buttons -->
                 <DataGridTemplateColumn Header="Actions" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
@@ -39,3 +39,4 @@
         </DataGrid>
     </Grid>
 </Page>
+

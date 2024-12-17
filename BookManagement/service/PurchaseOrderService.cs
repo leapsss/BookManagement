@@ -5,49 +5,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookManagement.entity;
-using BookManagement.mapper;
 namespace BookManagement.service
 {
     internal class PurchaseOrderService
     {
-        private readonly PurchaseOrderMapper purchaseOrderMapper;
+        private SqlSugarScope _db;
         public PurchaseOrderService()
         {
-            purchaseOrderMapper = new PurchaseOrderMapper();
+            // 初始化 SqlSugar 数据库连接（修改连接字符串为你的数据库信息）
+            _db = new SqlSugarScope(new ConnectionConfig()
+            {
+                ConnectionString = "Server=52.194.237.192;Port=32750;Database=book;Uid=postgres;Pwd=9#327.5",
+                DbType = DbType.PostgreSQL,
+                IsAutoCloseConnection = true,
+                InitKeyType = InitKeyType.Attribute
+            });
         }
         public List<PurchaseOrder> GetPurchaseOrders()
         {
-            return purchaseOrderMapper.GetPurchaseOrders();
+            return _db.Queryable<PurchaseOrder>().ToList();
         }
         public PurchaseOrder GetPurchaseOrderById(int id)
         {
-            return purchaseOrderMapper.GetPurchaseOrderById(id);
+            return _db.Queryable<PurchaseOrder>().Where(it => it.PuchaseOrderId == id).First();
         }
-        public List<PurchaseOrder> GetPagedPurchaseOrders(int pageIndex, int pageSize)
-        {
-           return purchaseOrderMapper.GetPagedPurchaseOrders(pageIndex, pageSize);
-        }
-        public List<PurchaseOrder> GetFilteredPurchaseOrders(string orderId, string supplierId, string purchaserId, DateTime? startDate, DateTime? endDate)
-        {
-            var query = purchaseOrderMapper.GetPurchaseOrders().AsQueryable();
-
-            if (!string.IsNullOrEmpty(orderId))
-                query = query.Where(po => po.PurchaseOrderId.ToString().Contains(orderId));
-
-            if (!string.IsNullOrEmpty(supplierId))
-                query = query.Where(po => po.SupplierId.ToString().Contains(supplierId));
-
-            if (!string.IsNullOrEmpty(purchaserId))
-                query = query.Where(po => po.PurchaserId.ToString().Contains(purchaserId));
-
-            if (startDate.HasValue)
-                query = query.Where(po => po.OrderDate >= startDate.Value);
-
-            if (endDate.HasValue)
-                query = query.Where(po => po.OrderDate <= endDate.Value);
-
-            return query.ToList();
-        }
-
     }
 }

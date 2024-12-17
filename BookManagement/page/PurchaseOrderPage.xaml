@@ -6,62 +6,36 @@
       xmlns:local="clr-namespace:BookManagement.page"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PurchaseOrderPage">
+      Title="UserManagementPage">
 
     <Grid>
-        <!-- 定义行和列 -->
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <!-- 搜索框行，自动根据内容高度调整 -->
-            <RowDefinition Height="*"/>
-            <!-- 数据展示区域，占据剩余空间 -->
-            <RowDefinition Height="Auto"/>
-            <!-- 分页按钮行 -->
-        </Grid.RowDefinitions>
-
-        <!-- 搜索框区域 -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10" Grid.Row="0">
-            <TextBlock Text="订单编号:" />
-            <TextBox Name="OrderIdTextBox" Width="150" Margin="5" />
-            <TextBlock Text="供货商编号:" />
-            <TextBox Name="SupplierIdTextBox" Width="150" Margin="5"  />
-            <TextBlock Text="采购员编号:" />
-            <TextBox Name="PurchaserIdTextBox" Width="150" Margin="5"  />
-      
-            <Button Content="搜索" Width="100" Margin="5" Click="SearchButton_Click"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1">
-            <TextBlock Text="开始日期:" />
-            <DatePicker Name="StartDatePicker" Width="150" Margin="5" />
-            <TextBlock Text="结束日期:" />
-            <DatePicker Name="EndDatePicker" Width="150" Margin="5" />
-        </StackPanel>
-        <!-- 数据展示区域 -->
         <DataGrid Name="PurchaseOrderDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                  CanUserAddRows="False" SelectionMode="Single" Grid.Row="2">
+                  CanUserAddRows="False" SelectionMode="Single">
             <DataGrid.Columns>
+                <!-- UserId Column -->
                 <DataGridTextColumn Header="订单编号" Binding="{Binding PurchaseOrderId}" IsReadOnly="True" Width="*"/>
+
+                <!-- UserName Column -->
                 <DataGridTextColumn Header="供货商编号" Binding="{Binding SupplierId}" Width="*"/>
-                <DataGridTextColumn Header="订单日期" Binding="{Binding OrderDate}" Width="*"/>
+
+                <!-- Role Column -->
+                <DataGridTextColumn Header="订单日期" Binding="{Binding role}" Width="*"/>
                 <DataGridTextColumn Header="采购员编号" Binding="{Binding PurchaserId}" Width="*"/>
-                <DataGridTemplateColumn Header="操作" Width="Auto">
+                <!-- Action Column with Buttons -->
+                <DataGridTemplateColumn Header="Actions" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <!--  <Button Content="编辑" Margin="5" Click="EditButton_Click"/>-->
-                                <!--  <Button Content="删除" Margin="5" Click="DeleteButton_Click"/>-->
+                                <!-- Edit Button -->
+                                <Button Content="Edit" Margin="5" Click="EditButton_Click"/>
+
+                                <!-- Delete Button -->
+                                <Button Content="Delete" Margin="5" Click="DeleteButton_Click"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-
-        <!-- 分页按钮区域 -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="3">
-            <Button Content="上一页" Click="PreviousPageButton_Click" />
-            <Button Content="下一页" Click="NextPageButton_Click" />
-        </StackPanel>
     </Grid>
 </Page>

@@ -21,57 +21,15 @@ namespace BookManagement.page
     public partial class PurchaseOrderPage : Page
     {
         private readonly PurchaseOrderService _dbOps;
-
         public PurchaseOrderPage()
         {
             InitializeComponent();
             _dbOps = new PurchaseOrderService();
-            LoadPurchaseOrders(); // 初始加载所有数据
+            LoadPurchaseOrders();
         }
-
-        // 加载采购订单数据
         public void LoadPurchaseOrders()
         {
-            var purchaseOrders = _dbOps.GetPurchaseOrders();
-            PurchaseOrderDataGrid.ItemsSource = purchaseOrders;
-        }
-        private int currentPage = 1;
-        private const int pageSize = 10;
-
-        private void LoadPageData()
-        {
-            var pagedData = _dbOps.GetPagedPurchaseOrders(currentPage, pageSize);
-            PurchaseOrderDataGrid.ItemsSource = pagedData;
-        }
-
-        // 下一页
-        private void NextPageButton_Click(object sender, RoutedEventArgs e)
-        {
-            currentPage++;
-            LoadPageData();
-        }
-
-        // 上一页
-        private void PreviousPageButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (currentPage > 1)
-            {
-                currentPage--;
-                LoadPageData();
-            }
-        }
-        // 搜索按钮点击事件
-        private void SearchButton_Click(object sender, RoutedEventArgs e)
-        {
-            string orderId = OrderIdTextBox.Text;
-            string supplierId = SupplierIdTextBox.Text;
-            string purchaserId = PurchaserIdTextBox.Text;
-            DateTime? startDate = StartDatePicker.SelectedDate;
-            DateTime? endDate = EndDatePicker.SelectedDate;
-
-            var filteredOrders = _dbOps.GetFilteredPurchaseOrders(orderId, supplierId, purchaserId, startDate, endDate);
-            PurchaseOrderDataGrid.ItemsSource = filteredOrders;
+            PurchaseOrderDataGrid.ItemsSource = _dbOps.GetPurchaseOrders();
         }
     }
-
 }

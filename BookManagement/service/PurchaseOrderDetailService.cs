@@ -5,34 +5,29 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BookManagement.entity;
-using BookManagement.mapper;
 namespace BookManagement.service
 {
     internal class PurchaseOrderDetailService
     {
-        private readonly PurchaseOrderDetailMapper purchaseOrderDetailMapper;
+        private SqlSugarScope _db;
         public PurchaseOrderDetailService()
         {
-            purchaseOrderDetailMapper = new PurchaseOrderDetailMapper();
+            // 初始化 SqlSugar 数据库连接（修改连接字符串为你的数据库信息）
+            _db = new SqlSugarScope(new ConnectionConfig()
+            {
+                ConnectionString = "Server=52.194.237.192;Port=32750;Database=book;Uid=postgres;Pwd=9#327.5",
+                DbType = DbType.PostgreSQL,
+                IsAutoCloseConnection = true,
+                InitKeyType = InitKeyType.Attribute
+            });
         }
         public List<PurchaseOrderDetail> GetPurchaseOrderDetails()
         {
-            return purchaseOrderDetailMapper.GetPurchaseOrderDetails();
+            return _db.Queryable<PurchaseOrderDetail>().ToList();
         }
         public PurchaseOrderDetail GetPurchaseOrderDetailById(int id)
         {
-            return purchaseOrderDetailMapper.GetPurchaseOrderDetailById(id);
-        }
-        public List<PurchaseOrderDetail> GetPurchaseOrderDetails(string orderId, string supplierId, decimal? minPrice, decimal? maxPrice)
-        {
-            return purchaseOrderDetailMapper.GetPurchaseOrderDetails()
-                .Where(po =>
-                    (string.IsNullOrEmpty(orderId) || po.PurchaseOrderId.ToString().Contains(orderId)) &&
-                    (string.IsNullOrEmpty(supplierId) || po.Isbn.ToString().Contains(supplierId)) &&
-                    (!minPrice.HasValue || po.Price >= minPrice) &&
-                    (!maxPrice.HasValue || po.Price <= maxPrice))
-                .ToList();
+            return _db.Queryable<PurchaseOrderDetail>().Where(it => it.PurchaseOrderDetailId == id).First();
         }
     }
-
 }
