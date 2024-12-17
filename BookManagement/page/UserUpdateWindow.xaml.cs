@@ -39,7 +39,7 @@ namespace BookManagement.page
             CurrentUser.username = UsernameTextBox.Text;
             CurrentUser.password = PasswordBox.Password;
             CurrentUser.role = RoleTextBox.Text;
-            _dbOps.UpdateUser(CurrentUser);
+            //_dbOps.UpdateUser(CurrentUser);
             // Close the window
             this.DialogResult = true;
             this.Close();

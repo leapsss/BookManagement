@@ -25,7 +25,7 @@ namespace BookManagement.page
 
             try
             {
-                var user = GetUserById(userID);
+                var user = getUserById(userID);
 
                 if (user == null)
                 {
@@ -49,9 +49,10 @@ namespace BookManagement.page
                     MessageBox.Show("密码错误！");
                 }
             }
-            catch (Exception ex) { 
+            catch (Exception ex)
+            {
 
-                MessageBox.Show("错误信息："+ ex.Message);
+                MessageBox.Show("错误信息：" + ex.Message);
             }
         }
 
@@ -76,7 +77,7 @@ namespace BookManagement.page
 
 
         //调用service中的方法，通过id查询，并返回查询到的用户
-        private User GetUserById(string userId)
+        private User getUserById(string userId)
         {
             try
             {

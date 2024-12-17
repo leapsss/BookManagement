@@ -1,34 +1,35 @@
 ﻿using BookManagement.entity;
 using BookManagement.mapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using static System.Reflection.Metadata.BlobBuilder;
 
 namespace BookManagement.service
 {
     public class BookService
     {
-        private readonly BookMapper bookMapper;
-        public BookService()
+        
+
+        public BookService() { }
+
+        public void addBook(Book book)
         {
-            bookMapper = new BookMapper();
+            BookMapper.addBook(book);
         }
 
-        public void Add(Book book)
+        public Book getBookByISBN(string isbn)
         {
-            bookMapper.addBook(book);
+            Book book = BookMapper.getBookByISBN(isbn);
+            book.price /= 100.0m;
+            return book;
         }
 
-        public Book GetByISBN(string isbn)
+        public List<Book> getAllBooks()
         {
-            return bookMapper.getBookByISBN(isbn);
-        }
-
-        public List<Book> GetAllBooks()
-        {
-            return bookMapper.getAllBooks();
+            List<Book> books = BookMapper.getAllBooks();
+            foreach (var book in books)
+            {
+                book.price = book.price / 100.0m;  // 将 Price 转换为小数形式
+            }
+            return books;
         }
 
     }

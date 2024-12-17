@@ -1,6 +1,5 @@
 ﻿using BookManagement.entity;
 using BookManagement.mapper;
-using BookManagement.util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +14,5 @@ namespace BookManagement.service
         {
             return UserMapper.getUserById(userId);
         }
-
-
     }
 }

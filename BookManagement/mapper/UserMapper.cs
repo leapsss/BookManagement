@@ -10,14 +10,10 @@ namespace BookManagement.mapper
 {
     class UserMapper
     {
-        public static User getUserById(string userId) 
+        public static User getUserById(string userId)
         {
             return DatabaseService.Instance.Db.Queryable<BookManagement.entity.User>()
                                            .First(u => u.userId == userId);
         }
-         
-
-
-
     }
 }

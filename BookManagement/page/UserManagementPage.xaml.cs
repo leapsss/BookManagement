@@ -32,7 +32,7 @@ namespace BookManagement.page
         // Load users from the database
         private void LoadUsers()
         {
-            UserDataGrid.ItemsSource = _dbOps.GetUsers(); // Bind users to DataGrid
+            //UserDataGrid.ItemsSource = _dbOps.GetUsers(); // Bind users to DataGrid
         }
 
         // Edit button click event
@@ -68,7 +68,7 @@ namespace BookManagement.page
                 var result = MessageBox.Show($"你确定删除用户 {user.username}吗?", "Confirm Deletion", MessageBoxButton.YesNo);
                 if (result == MessageBoxResult.Yes)
                 {
-                    _dbOps.DeleteUser(user.userId); // Delete user by userId
+                    //_dbOps.DeleteUser(user.userId); // Delete user by userId
                     LoadUsers(); // Reload user list after deletion
                 }
             }
