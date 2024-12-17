@@ -31,13 +31,42 @@ namespace BookManagement.service
             var query = purchaseOrderMapper.GetPurchaseOrders().AsQueryable();
 
             if (!string.IsNullOrEmpty(orderId))
-                query = query.Where(po => po.PurchaseOrderId.ToString().Contains(orderId)); // 使用ToString()转换为字符串后进行匹配
+            {
+                if (int.TryParse(orderId, out int parsedOrderId))
+                {
+                    query = query.Where(po => po.PurchaseOrderId == parsedOrderId);
+                }
+                else
+                {
+                    return new List<PurchaseOrder>(); // 返回空列表
+                }
+            }
 
             if (!string.IsNullOrEmpty(supplierId))
-                query = query.Where(po => po.SupplierId.ToString().Contains(supplierId));
+            {
+                if (int.TryParse(supplierId, out int parsedSupplierId))
+                {
+                    query = query.Where(po => po.SupplierId == parsedSupplierId);
+                }
+                else
+                {
+
+                    return new List<PurchaseOrder>(); // 返回空列表
+                }
+            }
 
             if (!string.IsNullOrEmpty(purchaserId))
-                query = query.Where(po => po.PurchaserId.ToString().Contains(purchaserId));
+            {
+                if (int.TryParse(purchaserId, out int parsedPurchaserId))
+                {
+                    query = query.Where(po => po.PurchaserId == parsedPurchaserId);
+                }
+                else
+                {
+ 
+                    return new List<PurchaseOrder>(); // 返回空列表
+                }
+            }
 
             if (startDate.HasValue)
                 query = query.Where(po => po.OrderDate >= startDate.Value);
@@ -45,8 +74,18 @@ namespace BookManagement.service
             if (endDate.HasValue)
                 query = query.Where(po => po.OrderDate <= endDate.Value);
 
-            return query.ToList();
+
+            var result = query.ToList();
+
+            if (!result.Any())
+            {
+
+                return new List<PurchaseOrder>();
+            }
+
+            return result;
         }
+
 
     }
 }

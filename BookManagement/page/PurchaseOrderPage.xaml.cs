@@ -20,33 +20,42 @@ namespace BookManagement.page
     /// </summary>
     public partial class PurchaseOrderPage : Page
     {
-        private readonly PurchaseOrderService _dbOps;
+        private readonly PurchaseOrderService purchaseOrderService;
         public PurchaseOrderPage()
         {
             InitializeComponent();
-            _dbOps = new PurchaseOrderService();
+            purchaseOrderService = new PurchaseOrderService();
             LoadPurchaseOrders();
         }
         public void LoadPurchaseOrders()
         {
-            PurchaseOrderDataGrid.ItemsSource = _dbOps.GetPurchaseOrders();
+            PurchaseOrderDataGrid.ItemsSource = purchaseOrderService.GetPurchaseOrders();
             LoadPageData();
         }
         private int currentPage = 1;
-        private const int pageSize = 10;
-
+        private const int pageSize = 15;
+        private int totalPages=0;
         private void LoadPageData()
         {
-            var pagedData = _dbOps.GetPagedPurchaseOrders(currentPage, pageSize);
+            var pagedData = purchaseOrderService.GetPagedPurchaseOrders(currentPage, pageSize);
+            var totalData = purchaseOrderService.GetPurchaseOrders();
             PurchaseOrderDataGrid.ItemsSource = pagedData;
-            PageInfoText.Text = $"第 {currentPage} 页 / 共 {Math.Ceiling(pagedData.Count / (double)pageSize)} 页";
+            totalPages = (int)Math.Ceiling(totalData.Count / (double)pageSize);
+            PageInfoText.Text = $"第 {currentPage} 页 / 共 {Math.Ceiling(totalData.Count / (double)pageSize)} 页";
         }
 
         // 下一页
         private void NextPageButton_Click(object sender, RoutedEventArgs e)
         {
-            currentPage++;
-            LoadPageData();
+            if (currentPage >= totalPages)
+            {
+                MessageBox.Show("已经是最后一页了");
+            }
+            else
+            {
+                currentPage++;
+                LoadPageData();
+            }
         }
 
         // 上一页
@@ -67,7 +76,7 @@ namespace BookManagement.page
             DateTime? startDate = StartDatePicker.SelectedDate;
             DateTime? endDate = EndDatePicker.SelectedDate;
 
-            var filteredOrders = _dbOps.GetFilteredPurchaseOrders(orderId, supplierId, purchaserId, startDate, endDate);
+            var filteredOrders = purchaseOrderService.GetFilteredPurchaseOrders(orderId, supplierId, purchaserId, startDate, endDate);
             PurchaseOrderDataGrid.ItemsSource = filteredOrders;
         }
     }
