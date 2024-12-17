@@ -1,19 +1,8 @@
 ﻿using BookManagement.entity;
+using BookManagement.service;
 using BookManagement.util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace BookManagement.page
 {
@@ -25,20 +14,25 @@ namespace BookManagement.page
         public BookManagementPage()
         {
             InitializeComponent();
+            showBookInfo();
         }
-        public void getBookInfo()
+        public void showBookInfo()
         {
-            try
+            BookService bookService = new BookService();
+            List<Book> books = bookService.getAllBooks();
+            foreach (var book in books)
             {
-                var db = DatabaseService.Instance.Db;
-                List<Book> books = db.Queryable<Book>().ToList();
-                BooksListView.ItemsSource = books;
+                MessageBox.Show($"ISBN: {book.isbn}, 书名: {book.bookName}, 作者: {book.author}, 价格: {book.price}");
+            }
+            BooksListView.ItemsSource = books;
+        }
+        public void addBookButton_Click(object sender, RoutedEventArgs e)
+        {
 
-            }
-            catch (System.Exception ex)
-            {
-                MessageBox.Show($"数据库操作失败：{ex.Message}");
-            }
+        }
+        public void editBookButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

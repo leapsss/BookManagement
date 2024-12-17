@@ -1,34 +1,27 @@
 ﻿using BookManagement.entity;
 using BookManagement.mapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookManagement.service
 {
     public class BookService
     {
-        private readonly BookMapper bookMapper;
-        public BookService()
+        
+
+        public BookService() { }
+
+        public void addBook(Book book)
         {
-            bookMapper = new BookMapper();
+            BookMapper.addBook(book);
         }
 
-        public void Add(Book book)
+        public Book getBookByISBN(string isbn)
         {
-            bookMapper.Add(book);
+            return BookMapper.getBookByISBN(isbn);
         }
 
-        public Book GetByISBN(string isbn)
+        public List<Book> getAllBooks()
         {
-            return bookMapper.GetByISBN(isbn);
-        }
-
-        public List<Book> GetAllBooks()
-        {
-            return bookMapper.GetAll();
+            return BookMapper.getAllBooks();
         }
 
     }
