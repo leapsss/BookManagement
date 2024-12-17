@@ -1,14 +1,9 @@
 ﻿using BookManagement.entity;
 using BookManagement.util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace BookManagement.repository
+namespace BookManagement.mapper
 {
-    public class BookRepository
+    public class BookMapper
     {
         public void Add(Book book)
         {
@@ -22,7 +17,8 @@ namespace BookManagement.repository
         {
             DatabaseService.Instance.Db.Deleteable<Book>().Where(it => it.isbn == isbn).ExecuteCommand();
         }
-        public Book GetByISBN(string isbn) {
+        public Book GetByISBN(string isbn)
+        {
             return DatabaseService.Instance.Db.Queryable<Book>().Where(it => it.isbn == isbn).First();
         }
 

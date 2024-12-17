@@ -1,5 +1,5 @@
 ﻿using BookManagement.entity;
-using BookManagement.repository;
+using BookManagement.mapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,25 +10,25 @@ namespace BookManagement.service
 {
     public class BookService
     {
-        private readonly BookRepository bookRepository;
+        private readonly BookMapper bookMapper;
         public BookService()
         {
-            bookRepository = new BookRepository();
+            bookMapper = new BookMapper();
         }
 
         public void Add(Book book)
         {
-            bookRepository.Add(book);
+            bookMapper.Add(book);
         }
 
         public Book GetByISBN(string isbn)
         {
-            return bookRepository.GetByISBN(isbn);
+            return bookMapper.GetByISBN(isbn);
         }
 
         public List<Book> GetAllBooks()
         {
-            return bookRepository.GetAll();
+            return bookMapper.GetAll();
         }
 
     }
