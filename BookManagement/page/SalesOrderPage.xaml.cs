@@ -1,0 +1,143 @@
+﻿using BookManagement.entity;
+using BookManagement.service;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
+
+namespace BookManagement.page
+{
+    /// <summary>
+    /// Interaction logic for SalesOrderPage.xaml
+    /// </summary>
+    public partial class SalesOrderPage : Page
+    {
+        // 存储已添加的订单详情
+        private List<SalesOrderService.SalesOrderDetailDTO> salesOrderDetailDTOList = new List<SalesOrderService.SalesOrderDetailDTO>();
+
+        public SalesOrderPage()
+        {
+            InitializeComponent();
+            SalesOrderDetailGrid.ItemsSource = salesOrderDetailDTOList;
+        }
+
+        /// <summary>
+        /// 添加按钮事件：添加书籍详情到列表
+        /// </summary>
+        private void BtnAdd_Click(object sender, RoutedEventArgs e)
+        {
+            // 输入验证
+            if (string.IsNullOrWhiteSpace(TxtISBN.Text) ||
+                !int.TryParse(TxtAmount.Text, out int amount) ||
+                !decimal.TryParse(TxtPrice.Text, out decimal price))
+            {
+                MessageBox.Show("请输入有效的 ISBN、数量 和 单价。", "输入错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            try
+            {
+                // 根据 ISBN 构建 SalesOrderDetailDTO
+                var salesOrderDetail = new SalesOrderDetail
+                {
+                    isbn = TxtISBN.Text,
+                    Amount = amount,
+                    Price = price
+                };
+
+                var salesOrderDetailDTO = SalesOrderService.salesOrderDetailToDTO(salesOrderDetail);
+
+                if (salesOrderDetailDTO.bookName != null)
+                {
+                    // 添加到列表
+                    salesOrderDetailDTOList.Add(salesOrderDetailDTO);
+
+                    // 刷新 DataGrid
+                    refreshData();
+
+                    // 清空输入框
+                    TxtISBN.Clear();
+                    TxtAmount.Clear();
+                    TxtPrice.Clear();
+                }
+                else
+                {
+                    MessageBox.Show("这本书不存在");
+                }
+                // todo add inventory verification
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"添加失败: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// 提交订单按钮事件
+        /// </summary>
+        private void BtnSubmit_Click(object sender, RoutedEventArgs e)
+        {
+            if (salesOrderDetailDTOList.Count == 0)
+            {
+                MessageBox.Show("请先添加订单明细。", "提示", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
+            }
+
+            try
+            {
+                // 创建销售订单
+                var salesOrder = new SalesOrder
+                {
+                    SalespersonId = 1,
+                    OrderDate = DateTime.Now
+                };
+
+                // 转换为 SalesOrderDetail 列表
+                var salesOrderDetails = new List<SalesOrderDetail>();
+                foreach (var dto in salesOrderDetailDTOList)
+                {
+                    salesOrderDetails.Add(new SalesOrderDetail
+                    {
+                        isbn = dto.isbn,
+                        Amount = dto.amount,
+                        Price = dto.price
+                    });
+                }
+
+                // 调用 Service 提交订单
+                SalesOrderService.addSalesOrder(salesOrder, salesOrderDetails);
+
+                MessageBox.Show("订单提交成功！", "成功", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                // 清空列表和界面
+                salesOrderDetailDTOList.Clear();
+                SalesOrderDetailGrid.ItemsSource = null;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"订单提交失败: {ex.Message}", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void BtnRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            refreshData();
+        }
+
+        private void refreshData()
+        {
+            SalesOrderDetailGrid.ItemsSource = null;
+            SalesOrderDetailGrid.ItemsSource = salesOrderDetailDTOList;
+        }
+    }
+}
