@@ -44,6 +44,9 @@
             <Button Content="供货商管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
             <Button Content="报表中心" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
             <Button Content="系统设置" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="用户管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="供货单信息" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="供货单明细" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
         </StackPanel>
 
         <!-- 主工作区 -->
