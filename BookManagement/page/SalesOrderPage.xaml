@@ -28,6 +28,18 @@
                 <DataGridTextColumn Header="作者" Binding="{Binding author}" Width="*"/>
                 <DataGridTextColumn Header="数量" Binding="{Binding amount}" Width="*"/>
                 <DataGridTextColumn Header="单价" Binding="{Binding price}" Width="*"/>
+                <DataGridTextColumn Header="总价" Binding="{Binding totalPrice}" Width="*"/>
+                <DataGridTemplateColumn Header="操作" Width="Auto">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="删除" 
+                            Width="50" 
+                            Click="BtnDelete_Click" 
+                            Tag="{Binding}" />
+                            <!-- 将当前行的数据绑定到Tag属性 -->
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
@@ -37,10 +49,10 @@
             <TextBox x:Name="TxtISBN" Width="120" Margin="5" />
 
             <TextBlock Text="数量:" VerticalAlignment="Center" />
-            <TextBox x:Name="TxtAmount" Width="60" Margin="5" />
+            <TextBox x:Name="TxtAmount" Width="60" Margin="5" Text="1" />
 
             <TextBlock Text="单价:" VerticalAlignment="Center" />
-            <TextBox x:Name="TxtPrice" Width="60" Margin="5" />
+            <TextBox x:Name="TxtPrice" Width="60" Margin="5" Text="0" />
 
             <Button Content="添加" Click="BtnAdd_Click" Margin="10,0" Width="100"/>
             <Button Content="提交订单" Click="BtnSubmit_Click" Margin="10,0" Width="120"/>

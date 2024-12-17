@@ -55,26 +55,16 @@ namespace BookManagement.page
                     Price = price
                 };
 
-                var salesOrderDetailDTO = SalesOrderService.salesOrderDetailToDTO(salesOrderDetail);
-
-                if (salesOrderDetailDTO.bookName != null)
+                if (insertToTable(salesOrderDetail))
                 {
-                    // 添加到列表
-                    salesOrderDetailDTOList.Add(salesOrderDetailDTO);
-
                     // 刷新 DataGrid
                     refreshData();
 
                     // 清空输入框
                     TxtISBN.Clear();
-                    TxtAmount.Clear();
-                    TxtPrice.Clear();
+                    TxtAmount.Text = "1";
+                    TxtPrice.Text = "0";
                 }
-                else
-                {
-                    MessageBox.Show("这本书不存在");
-                }
-                // todo add inventory verification
             }
             catch (Exception ex)
             {
@@ -129,6 +119,40 @@ namespace BookManagement.page
             }
         }
 
+        private bool insertToTable(SalesOrderDetail salesOrderDetail) // return true if success
+        {
+            var salesOrderDetailDTOToInsert = SalesOrderService.salesOrderDetailToDTO(salesOrderDetail);
+            if (salesOrderDetailDTOToInsert == null)
+            {
+                MessageBox.Show("这本书不存在");
+                return false;
+            }
+
+            if (salesOrderDetailDTOToInsert.amount <= 0)
+            {
+                MessageBox.Show("数量必须大于0");
+                return false;
+            }
+
+            if (salesOrderDetailDTOToInsert.price <= 0)
+            {
+                salesOrderDetailDTOToInsert.price = salesOrderDetailDTOToInsert.originalPrice;
+            }
+
+            // 判断是否已经存在
+            foreach (var salesOrderDetailDTO in salesOrderDetailDTOList)
+            {
+                if (salesOrderDetailDTOToInsert.isbn == salesOrderDetailDTO.isbn && salesOrderDetailDTOToInsert.price == salesOrderDetailDTO.price)
+                {
+                    salesOrderDetailDTO.amount += salesOrderDetail.Amount;
+                    return true;
+                }
+            }
+
+            salesOrderDetailDTOList.Add(salesOrderDetailDTOToInsert);
+            return true;
+        }
+
         private void BtnRefresh_Click(object sender, RoutedEventArgs e)
         {
             refreshData();
@@ -139,5 +163,20 @@ namespace BookManagement.page
             SalesOrderDetailGrid.ItemsSource = null;
             SalesOrderDetailGrid.ItemsSource = salesOrderDetailDTOList;
         }
+
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            // 获取点击按钮对应的行数据
+            var button = sender as Button;
+            if (button?.Tag is SalesOrderService.SalesOrderDetailDTO dtoToRemove)
+            {
+                // 从列表中移除选中的对象
+                salesOrderDetailDTOList.Remove(dtoToRemove);
+
+                // 刷新 DataGrid 显示
+                refreshData();
+            }
+        }
+
     }
 }

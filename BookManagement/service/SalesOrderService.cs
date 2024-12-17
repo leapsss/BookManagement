@@ -33,16 +33,21 @@ namespace BookManagement.service
             return SalesOrderDetailMapper.getAllBySalesOrderId(salesOrder.SalesOrderId);
         }
 
-        public static SalesOrderDetailDTO salesOrderDetailToDTO(SalesOrderDetail salesOrderDetail)
+        public static SalesOrderDetailDTO? salesOrderDetailToDTO(SalesOrderDetail salesOrderDetail)
         {
             SalesOrderDetailDTO salesOrderDetailDTO = new SalesOrderDetailDTO();
             Book book = BookMapper.getBookByISBN(salesOrderDetail.isbn);
+            if (book == null)
+            {
+                return null;
+            }
             salesOrderDetailDTO.isbn = salesOrderDetail.isbn;
             salesOrderDetailDTO.bookName = book.bookName;
             salesOrderDetailDTO.press = book.press;
             salesOrderDetailDTO.author = book.author;
             salesOrderDetailDTO.amount = salesOrderDetail.Amount;
             salesOrderDetailDTO.price = salesOrderDetail.Price;
+            salesOrderDetailDTO.originalPrice = book.price / 100;
             return salesOrderDetailDTO;
         }
 
@@ -54,6 +59,16 @@ namespace BookManagement.service
             public string author { get; set; }
             public int amount { get; set; }
             public decimal price { get; set; }
+
+            public decimal originalPrice { get; set; }
+
+            public decimal totalPrice
+            {
+                get
+                {
+                    return amount * price;
+                }
+            }
         }
     }
 }
