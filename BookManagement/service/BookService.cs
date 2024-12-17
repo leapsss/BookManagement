@@ -5,26 +5,23 @@ namespace BookManagement.service
 {
     public class BookService
     {
-        private readonly BookMapper bookMapper;
+        
 
-        public BookService()
-        {
-            bookMapper = new BookMapper();
-        }
+        public BookService() { }
 
         public void addBook(Book book)
         {
-            bookMapper.Add(book);
+            BookMapper.addBook(book);
         }
 
-        public Book getByISBN(string isbn)
+        public Book getBookByISBN(string isbn)
         {
-            return bookMapper.GetByISBN(isbn);
+            return BookMapper.getBookByISBN(isbn);
         }
 
         public List<Book> getAllBooks()
         {
-            return bookMapper.GetAll();
+            return BookMapper.getAllBooks();
         }
 
     }

@@ -5,7 +5,7 @@ namespace BookManagement.mapper
 {
     public class BookMapper
     {
-        public void Add(Book book)
+        public static void addBook(Book book)
         {
             DatabaseService.Instance.Db.Insertable(book).ExecuteCommand();
         }
@@ -22,7 +22,7 @@ namespace BookManagement.mapper
             return DatabaseService.Instance.Db.Queryable<Book>().Where(it => it.isbn == isbn).First();
         }
 
-        public static List<Book> getAllBook()
+        public static List<Book> getAllBooks()
         {
             return DatabaseService.Instance.Db.Queryable<Book>().ToList();
         }
