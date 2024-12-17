@@ -12,6 +12,8 @@ namespace BookManagement.service
 {
     public class SalesOrderService
     {
+        static readonly InventoryService inventoryService = new InventoryService();
+
         public static void addSalesOrder(SalesOrder salesOrder, List<SalesOrderDetail> salesOrderDetails)
         {
             int id = SalesOrderMapper.add(salesOrder);
@@ -19,7 +21,7 @@ namespace BookManagement.service
             {
                 salesOrderDetail.SalesOrderId = id;
                 SalesOrderDetailMapper.add(salesOrderDetail);
-                //todo when inventory ready, update inventory data.
+                inventoryService.RemoveInventory(salesOrderDetail.isbn, salesOrderDetail.Amount);
             });
         }
 
@@ -48,6 +50,13 @@ namespace BookManagement.service
             salesOrderDetailDTO.amount = salesOrderDetail.Amount;
             salesOrderDetailDTO.price = salesOrderDetail.Price;
             salesOrderDetailDTO.originalPrice = book.price / 100;
+            if (inventoryService.GetInventoryByIsbn(salesOrderDetail.isbn) != null)
+            {
+                salesOrderDetailDTO.inventory = inventoryService.GetInventoryByIsbn(salesOrderDetail.isbn).Quantity;
+            } else
+            {
+                salesOrderDetailDTO.inventory = 0;
+            }
             return salesOrderDetailDTO;
         }
 
@@ -61,6 +70,8 @@ namespace BookManagement.service
             public decimal price { get; set; }
 
             public decimal originalPrice { get; set; }
+
+            public int inventory { get; set; }
 
             public decimal totalPrice
             {

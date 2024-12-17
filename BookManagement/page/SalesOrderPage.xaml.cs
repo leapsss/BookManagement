@@ -139,11 +139,23 @@ namespace BookManagement.page
                 salesOrderDetailDTOToInsert.price = salesOrderDetailDTOToInsert.originalPrice;
             }
 
+            if (salesOrderDetailDTOToInsert.inventory < salesOrderDetailDTOToInsert.amount)
+            {
+                MessageBox.Show("库存不足");
+                return false;
+            }
+
             // 判断是否已经存在
             foreach (var salesOrderDetailDTO in salesOrderDetailDTOList)
             {
                 if (salesOrderDetailDTOToInsert.isbn == salesOrderDetailDTO.isbn && salesOrderDetailDTOToInsert.price == salesOrderDetailDTO.price)
                 {
+                    if (salesOrderDetailDTOToInsert.amount + salesOrderDetailDTO.amount > salesOrderDetailDTO.inventory)
+                    {
+                        MessageBox.Show("库存不足");
+                        return false;
+                    }
+
                     salesOrderDetailDTO.amount += salesOrderDetail.Amount;
                     return true;
                 }
