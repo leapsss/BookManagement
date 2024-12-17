@@ -9,20 +9,20 @@ namespace BookManagement.mapper
         {
             DatabaseService.Instance.Db.Insertable(book).ExecuteCommand();
         }
-        public void Update(Book book)
+        public static void updateBook(Book book)
         {
             DatabaseService.Instance.Db.Updateable(book).ExecuteCommand();
         }
-        public void DeleteByISBN(string isbn)
+        public static void deleteBookByISBN(string isbn)
         {
             DatabaseService.Instance.Db.Deleteable<Book>().Where(it => it.isbn == isbn).ExecuteCommand();
         }
-        public Book GetByISBN(string isbn)
+        public static Book getBookByISBN(string isbn)
         {
             return DatabaseService.Instance.Db.Queryable<Book>().Where(it => it.isbn == isbn).First();
         }
 
-        public List<Book> GetAll()
+        public static List<Book> getAllBook()
         {
             return DatabaseService.Instance.Db.Queryable<Book>().ToList();
         }
