@@ -5,9 +5,9 @@ namespace BookManagement.mapper
 {
     public class SalesOrderMapper
     {
-        public static void add(SalesOrder salesOrder)
+        public static int add(SalesOrder salesOrder)
         {
-            DatabaseService.Instance.Db.Insertable(salesOrder).ExecuteCommand();
+            return DatabaseService.Instance.Db.Insertable(salesOrder).ExecuteReturnIdentity(); // return auto increase id
         }
 
         public static void update(SalesOrder salesOrder)
