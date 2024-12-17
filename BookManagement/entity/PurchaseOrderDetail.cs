@@ -17,7 +17,7 @@ namespace BookManagement.entity
         [SugarColumn(ColumnName = "isbn")]
         public int Isbn { get; set; }
         [SugarColumn(ColumnName = "amount")]
-        public int OrderStatus { get; set; }
+        public int Amount { get; set; }
         [SugarColumn(ColumnName = "price")]
         public decimal Price { get; set; }
     }
