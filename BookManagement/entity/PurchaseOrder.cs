@@ -11,7 +11,7 @@ namespace BookManagement.entity
     internal class PurchaseOrder
     {
         [SugarColumn(IsPrimaryKey = true, IsIdentity = true, ColumnName = "purchase_order_id")]
-        public int PuchaseOrderId { get; set; }
+        public int PurchaseOrderId { get; set; }
         [SugarColumn(ColumnName = "supplier_id")]
         public int SupplierId { get; set; }
         [SugarColumn(ColumnName = "order_date")]

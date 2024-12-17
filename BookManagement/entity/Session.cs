@@ -20,12 +20,12 @@ namespace BookManagement.entity
     {
 
         // 用于存储当前登录用户的ID
-        private static int? _currentUserId;
+        private static string? _currentUserId;
 
         /// <summary>
         /// 设置当前登录的用户ID
         /// </summary>
-        public static void SetCurrentUserId(int userId)
+        public static void SetCurrentUserId(string userId)
         {
             _currentUserId = userId;
         }
@@ -33,7 +33,7 @@ namespace BookManagement.entity
         /// <summary>
         /// 获取当前登录的用户ID
         /// </summary>
-        public static int? GetCurrentUserId()
+        public static string? GetCurrentUserId()
         {
             return _currentUserId;
         }

@@ -6,36 +6,58 @@
       xmlns:local="clr-namespace:BookManagement.page"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="UserManagementPage">
+      Title="PurchaseOrderDetailPage">
 
     <Grid>
-        <DataGrid Name="PurchaseOrderDetailDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                  CanUserAddRows="False" SelectionMode="Single">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 搜索框行，自动根据内容高度调整 -->
+            <RowDefinition Height="*"/>
+            <!-- 数据展示区域，占据剩余空间 -->
+            <RowDefinition Height="Auto"/>
+            <!-- 分页按钮行 -->
+        </Grid.RowDefinitions>
+        <!-- 搜索区域 -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10" Grid.Row="0">
+            <TextBlock Text="订单编号:" VerticalAlignment="Center"/>
+            <TextBox Name="OrderIdTextBox" Width="150" Margin="5"/>
+            <TextBlock Text="ISBN编码:" VerticalAlignment="Center"/>
+            <TextBox Name="SupplierIdTextBox" Width="150" Margin="5"/>
+
+            <Button Content="搜索" Width="100" Margin="5" Click="SearchButton_Click"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1">
+            <TextBlock Text="价格区间:" VerticalAlignment="Center"/>
+            <TextBox Name="MinPriceTextBox" Width="80" Margin="5" Text="最小价格"/>
+            <TextBlock Text="—" VerticalAlignment="Center"/>
+            <TextBox Name="MaxPriceTextBox" Width="80" Margin="5" Text="最大价格"/>
+        </StackPanel>
+        <!-- 数据展示区域 -->
+        <DataGrid Name="PurchaseOrderDetailDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                  CanUserAddRows="False" SelectionMode="Single" Grid.Row="2">
             <DataGrid.Columns>
-                <!-- UserId Column -->
                 <DataGridTextColumn Header="订单编号" Binding="{Binding PurchaseOrderId}" IsReadOnly="True" Width="*"/>
-
-                <!-- UserName Column -->
                 <DataGridTextColumn Header="ISBN编码" Binding="{Binding SupplierId}" Width="*"/>
-
-                <!-- Role Column -->
-                <DataGridTextColumn Header="数量" Binding="{Binding amount}" Width="*"/>
-                <DataGridTextColumn Header="进价" Binding="{Binding price}" Width="*"/>
-                <!-- Action Column with Buttons -->
-                <DataGridTemplateColumn Header="Actions" Width="Auto">
+                <DataGridTextColumn Header="数量" Binding="{Binding Amount}" Width="*"/>
+                <DataGridTextColumn Header="进价" Binding="{Binding Price}" Width="*"/>
+                <DataGridTemplateColumn Header="操作" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <!-- Edit Button -->
-                                <Button Content="Edit" Margin="5" Click="EditButton_Click"/>
 
-                                <!-- Delete Button -->
-                                <Button Content="Delete" Margin="5" Click="DeleteButton_Click"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+
+        <!-- 分页控件 -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="3">
+            <Button Content="上一页" Click="PreviousPageButton_Click"/>
+            <TextBlock Name="PageInfoText" VerticalAlignment="Center" Margin="10"/>
+            <Button Content="下一页" Click="NextPageButton_Click"/>
+        </StackPanel>
     </Grid>
 </Page>
