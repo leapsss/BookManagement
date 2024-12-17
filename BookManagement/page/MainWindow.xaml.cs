@@ -28,7 +28,7 @@ namespace BookManagement.page
 
 
                 // 测试查询所有书籍
-                List<Book> books = bookService.GetAllBooks();
+                List<Book> books = bookService.getAllBooks();
 
                 // 打印查询结果到控制台
                 foreach (var book in books)

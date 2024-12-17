@@ -43,7 +43,8 @@ namespace BookManagement.page
 
                     MessageBox.Show("登录成功！");
 
-                    NavigateToRolePage(user.role);
+                    LayoutWindow l = new LayoutWindow();
+                    l.Show();
                     this.Close();
                 }
                 else
