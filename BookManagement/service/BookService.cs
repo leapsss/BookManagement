@@ -18,17 +18,17 @@ namespace BookManagement.service
 
         public void Add(Book book)
         {
-            bookMapper.Add(book);
+            bookMapper.addBook(book);
         }
 
         public Book GetByISBN(string isbn)
         {
-            return bookMapper.GetByISBN(isbn);
+            return bookMapper.getBookByISBN(isbn);
         }
 
         public List<Book> GetAllBooks()
         {
-            return bookMapper.GetAll();
+            return bookMapper.getAllBooks();
         }
 
     }
