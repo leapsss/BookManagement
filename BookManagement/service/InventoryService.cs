@@ -1,45 +1,40 @@
-﻿using BookManagement.entity;
-using BookManagement.mapper;
+﻿using BookManagement.mapper;
+using BookManagement.entity;
+using System;
+using System.Collections.Generic;
 
 namespace BookManagement.service
 {
     public class InventoryService
     {
-        public InventoryService() { }
-
-        public void addInventory(Inventory inventory)
+        public List<Inventory> GetAllInventory()
         {
-            InventoryMapper.addInventory(inventory);
+            return InventoryMapper.GetAllInventory();
         }
 
-        public void updateInventory(Inventory inventory)
+        public Inventory GetInventoryByIsbn(string isbn)
         {
-            InventoryMapper.updateInventory(inventory);
+            return InventoryMapper.GetInventoryByIsbn(isbn);
         }
 
-        public void deleteInventoryById(int inventoryId)
+        public void AddInventory(string isbn, int quantity)
         {
-            InventoryMapper.deleteInventoryById(inventoryId);
+            if (quantity <= 0)
+            {
+                throw new ArgumentException("入库数量必须大于零");
+            }
+
+            InventoryMapper.AddInventory(isbn, quantity);
         }
 
-        public Inventory getInventoryById(int inventoryId)
+        public void RemoveInventory(string isbn, int quantity)
         {
-            return InventoryMapper.getInventoryById(inventoryId);
-        }
+            if (quantity <= 0)
+            {
+                throw new ArgumentException("出库数量必须大于零");
+            }
 
-        public List<Inventory> getAllInventory()
-        {
-            return InventoryMapper.getAllInventory();
-        }
-
-        public Inventory getInventoryByIsbn(string isbn)
-        {
-            return InventoryMapper.getInventoryByIsbn(isbn);
-        }
-
-        public List<Inventory> getInventoryWithBookInfo(string bookName = "", string clcName = "", decimal? minPrice = null, decimal? maxPrice = null)
-        {
-            return InventoryMapper.getInventoryWithBookInfo(bookName, clcName, minPrice, maxPrice);
+            InventoryMapper.RemoveInventory(isbn, quantity);
         }
     }
 }

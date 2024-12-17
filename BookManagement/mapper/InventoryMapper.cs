@@ -1,61 +1,64 @@
 ﻿using BookManagement.entity;
 using BookManagement.util;
+using SqlSugar;
+using System;
+using System.Linq;
 
 namespace BookManagement.mapper
 {
     public class InventoryMapper
     {
-        public static void addInventory(Inventory inventory)
-        {
-            DatabaseService.Instance.Db.Insertable(inventory).ExecuteCommand();
-        }
-
-        public static void updateInventory(Inventory inventory)
-        {
-            DatabaseService.Instance.Db.Updateable(inventory).ExecuteCommand();
-        }
-
-        public static void deleteInventoryById(int inventoryId)
-        {
-            DatabaseService.Instance.Db.Deleteable<Inventory>().Where(it => it.InventoryId == inventoryId).ExecuteCommand();
-        }
-
-        public static Inventory getInventoryById(int inventoryId)
-        {
-            return DatabaseService.Instance.Db.Queryable<Inventory>().Where(it => it.InventoryId == inventoryId).First();
-        }
-
-        public static List<Inventory> getAllInventory()
+        // 获取所有库存
+        public static List<Inventory> GetAllInventory()
         {
             return DatabaseService.Instance.Db.Queryable<Inventory>().ToList();
         }
 
-        public static Inventory getInventoryByIsbn(string isbn)
+        // 通过ISBN获取库存
+        public static Inventory GetInventoryByIsbn(string isbn)
         {
-            return DatabaseService.Instance.Db.Queryable<Inventory>().Where(it => it.Isbn == isbn).First();
+            return DatabaseService.Instance.Db.Queryable<Inventory>()
+                                                .Where(it => it.Isbn == isbn)
+                                                .First();
         }
 
-        public static List<Inventory> getInventoryWithBookInfo(string bookName = "", string clcName = "", decimal? minPrice = null, decimal? maxPrice = null)
+        // 增加库存
+        public static void AddInventory(string isbn, int quantity)
         {
-            var query = DatabaseService.Instance.Db.Queryable<Inventory>()
-                .LeftJoin<Book>((i, b) => i.Isbn == b.isbn)
-                .WhereIF(!string.IsNullOrEmpty(bookName), (i, b) => b.bookName.Contains(bookName))
-                .WhereIF(!string.IsNullOrEmpty(clcName), (i, b) => b.clcName == clcName)
-                .WhereIF(minPrice.HasValue, (i, b) => b.price >= minPrice.Value)
-                .WhereIF(maxPrice.HasValue, (i, b) => b.price <= maxPrice.Value)
-                .Select((i, b) => new Inventory
-                {
-                    InventoryId = i.InventoryId,
-                    Isbn = i.Isbn,
-                    Quantity = i.Quantity,
-                    LastUpdated = i.LastUpdated,
-                    BookName = b.bookName,
-                    Price = b.price,
-                    ClcName = b.clcName
-                })
-                .ToList();
+            var inventory = GetInventoryByIsbn(isbn);
+            if (inventory != null)
+            {
+                // 如果库存存在，更新库存数量
+                inventory.Quantity += quantity;
+                inventory.LastUpdated = DateTime.Now;
+                DatabaseService.Instance.Db.Updateable(inventory).ExecuteCommand();
+            }
+            else
+            {
+                // 库存不存在，创建新的库存记录
+                var newInventory = new Inventory { Isbn = isbn, Quantity = quantity, LastUpdated = DateTime.Now };
+                DatabaseService.Instance.Db.Insertable(newInventory).ExecuteCommand();
+            }
+        }
 
-            return query;
+        // 减少库存
+        public static void RemoveInventory(string isbn, int quantity)
+        {
+            var inventory = GetInventoryByIsbn(isbn);
+            if (inventory == null)
+            {
+                throw new Exception("库存中不存在该ISBN的书籍");
+            }
+
+            if (inventory.Quantity < quantity)
+            {
+                throw new Exception("库存不足，无法出库");
+            }
+
+            // 如果库存存在且数量足够，减少库存
+            inventory.Quantity -= quantity;
+            inventory.LastUpdated = DateTime.Now;
+            DatabaseService.Instance.Db.Updateable(inventory).ExecuteCommand();
         }
     }
 }

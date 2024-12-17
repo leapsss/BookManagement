@@ -8,43 +8,41 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="InventoryManagementPage">
     <Grid>
-        <StackPanel>
-            <!-- 条件查询 -->
-            <TextBlock Text="书名查询" Margin="5"/>
-            <TextBox x:Name="BookNameTextBox" Margin="5" Width="200"/>
+        <TabControl>
+            <!-- 数据展示 Tab -->
+            <TabItem Header="库存列表">
+                <StackPanel>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
+                        <TextBox x:Name="SearchIsbnTextBox" Width="300" ToolTip="输入ISBN查询" />
+                        <Button Content="查询" Width="100" Height="30" Margin="10,0,0,0" Click="SearchButton_Click"/>
+                    </StackPanel>
 
-            <TextBlock Text="分类查询" Margin="5"/>
-            <ComboBox x:Name="CategoryComboBox" Margin="5" Width="200">
-                <!-- 分类选项可以动态填充 -->
-                <ComboBoxItem Content="所有分类"/>
-                <ComboBoxItem Content="文学"/>
-                <ComboBoxItem Content="科技"/>
-                <ComboBoxItem Content="教育"/>
-            </ComboBox>
+                    <ListView x:Name="InventoryListView" Margin="10">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="库存ID" DisplayMemberBinding="{Binding InventoryId}" Width="100"/>
+                                <GridViewColumn Header="ISBN" DisplayMemberBinding="{Binding Isbn}" Width="100"/>
+                                <GridViewColumn Header="库存数量" DisplayMemberBinding="{Binding Quantity}" Width="100"/>
+                                <GridViewColumn Header="最后更新时间" DisplayMemberBinding="{Binding LastUpdated}" Width="150"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </TabItem>
 
-            <TextBlock Text="价格区间查询" Margin="5"/>
-            <StackPanel Orientation="Horizontal">
-                <TextBox x:Name="MinPriceTextBox" Width="80" Margin="5" ToolTip="最低价"/>
-                <TextBox x:Name="MaxPriceTextBox" Width="80" Margin="5" ToolTip="最高价"/>
-            </StackPanel>
+            <!-- 库存管理 Tab -->
+            <TabItem Header="库存管理">
+                <StackPanel Margin="10">
+                    <TextBlock Text="ISBN" Margin="5"/>
+                    <TextBox x:Name="IsbnTextBox" Margin="5"/>
 
-            <Button Content="查询" Margin="10" Click="QueryButton_Click"/>
+                    <TextBlock Text="数量" Margin="5"/>
+                    <TextBox x:Name="QuantityTextBox" Margin="5"/>
 
-            <!-- 库存列表 -->
-            <ListView x:Name="InventoryListView" Margin="10" Height="250">
-                <!-- 定义列 -->
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="库存ID" DisplayMemberBinding="{Binding InventoryId}" Width="100"/>
-                        <GridViewColumn Header="ISBN" DisplayMemberBinding="{Binding Isbn}" Width="150"/>
-                        <GridViewColumn Header="书名" DisplayMemberBinding="{Binding BookName}" Width="150"/>
-                        <GridViewColumn Header="分类" DisplayMemberBinding="{Binding ClcName}" Width="100"/>
-                        <GridViewColumn Header="售价" DisplayMemberBinding="{Binding Price}" Width="80"/>
-                        <GridViewColumn Header="库存数量" DisplayMemberBinding="{Binding Quantity}" Width="100"/>
-                        <GridViewColumn Header="最后更新时间" DisplayMemberBinding="{Binding LastUpdated}" Width="180"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </StackPanel>
+                    <Button Content="入库" Width="100" Height="30" Margin="10" Click="AddInventoryButton_Click"/>
+                    <Button Content="出库" Width="100" Height="30" Margin="10" Click="RemoveInventoryButton_Click"/>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Page>
