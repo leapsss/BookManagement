@@ -23,9 +23,9 @@ namespace BookManagement.page
             if (!ValidateInput(userID, password))
                 return;
 
-            if (int.TryParse(userID, out int parsedUserId))
+            try
             {
-                var user = GetUserById(parsedUserId);
+                var user = getUserById(userID);
 
                 if (user == null)
                 {
@@ -38,7 +38,7 @@ namespace BookManagement.page
                     // 保存当前用户ID到 Session
                     Session.SetCurrentUserId(user.userId);
 
-                    MessageBox.Show("登录成功！");
+                    //MessageBox.Show("登录成功！");
 
                     LayoutWindow l = new LayoutWindow();
                     l.Show();
@@ -49,12 +49,15 @@ namespace BookManagement.page
                     MessageBox.Show("密码错误！");
                 }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("请输入有效的用户ID！");
+
+                MessageBox.Show("错误信息：" + ex.Message);
             }
         }
 
+
+        //判断账号或者密码是否为空
         private bool ValidateInput(string userID, string password)
         {
             if (string.IsNullOrEmpty(userID))
@@ -72,23 +75,19 @@ namespace BookManagement.page
             return true;
         }
 
-        private BookManagement.entity.User GetUserById(int userId)
+
+        //调用service中的方法，通过id查询，并返回查询到的用户
+        private User getUserById(string userId)
         {
             try
             {
-                return _databaseService.Db.Queryable<BookManagement.entity.User>()
-                                           .First(u => u.userId == userId);
+                return UserService.getUserById(userId);
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"查询用户时出错: {ex.Message}");
                 return null;
             }
-        }
-
-        private void OpenPage(Window window)
-        {
-            window.Show();
         }
     }
 }
