@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace BookManagement.mapper
+namespace BookManagement.service
 {
-    class UserMapper
+    class UserServer
     {
     }
 }
