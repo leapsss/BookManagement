@@ -10,17 +10,25 @@
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+
             <RowDefinition Height="*" />
             <!-- 上方显示列表 -->
             <RowDefinition Height="Auto" />
             <!-- 底部输入框 -->
         </Grid.RowDefinitions>
-
+        
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="5">
+            <TextBlock Text="供应商:" VerticalAlignment="Center" Margin="5"/>
+            <ComboBox x:Name="SupplierComboBox" Width="200" Margin="5" DisplayMemberPath="SupplierName" SelectedValuePath="SupplierId" />
+        </StackPanel>
         <!-- 1. 书籍列表 -->
         <DataGrid x:Name="PurchaseOrderDetailGrid" 
               AutoGenerateColumns="False"
               CanUserAddRows="False" 
-              IsReadOnly="True">
+              IsReadOnly="True"
+              Grid.Row="1"
+            >
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ISBN" Binding="{Binding isbn}" Width="*"/>
                 <DataGridTextColumn Header="书名" Binding="{Binding bookName}" Width="*"/>
@@ -44,7 +52,7 @@
         </DataGrid>
 
         <!-- 2. 输入框区域 -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="5">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
             <TextBlock Text="ISBN:" VerticalAlignment="Center" />
             <TextBox x:Name="TxtISBN" Width="120" Margin="5" />
 
