@@ -38,16 +38,16 @@
         <!-- 左侧导航栏 -->
         <StackPanel Grid.Column="0" Background="#2C3E50">         
             <TextBlock Text="图书进销存管理系统" Foreground="White" FontSize="18" FontWeight="Bold" HorizontalAlignment="Center" Margin="10,20,10,30"/>
-            <Button Content="书籍管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
-            <Button Content="销售管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="员工管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
             <Button Content="库存管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="书籍管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
             <Button Content="供货商管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
-            <Button Content="报表中心" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
-            <Button Content="系统设置" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
-            <Button Content="用户管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
-            <Button Content="供货单信息" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
-            <Button Content="供货单明细" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
             <Button Content="进货管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="进货单信息" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="进货单明细" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="销售管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="销售单明细" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="报表中心" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
         </StackPanel>
 
         <!-- 主工作区 -->
