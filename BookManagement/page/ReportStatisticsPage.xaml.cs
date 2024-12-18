@@ -6,6 +6,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace BookManagement.page
 {
@@ -139,9 +140,9 @@ namespace BookManagement.page
                 else
                 {
                     ResultsDataGrid.ItemsSource = summary.Details;
-                    TotalCostTextBlock.Text = summary.TotalCost.ToString("C");
-                    TotalRevenueTextBlock.Text = summary.TotalRevenue.ToString("C");
-                    ProfitTextBlock.Text = summary.Profit >= 0 ? summary.Profit.ToString("C") : $"-{(-summary.Profit).ToString("C")}";
+                    TotalCostTextBlock.Text = summary.TotalCost.ToString("C", new CultureInfo("zh-CN"));
+                    TotalRevenueTextBlock.Text = summary.TotalRevenue.ToString("C", new CultureInfo("zh-CN"));
+                    ProfitTextBlock.Text = summary.Profit >= 0 ? summary.Profit.ToString("C", new CultureInfo("zh-CN")) : $"-{(-summary.Profit).ToString("C", new CultureInfo("zh-CN"))}";
                     ProfitTextBlock.Foreground = summary.Profit >= 0 ? Brushes.Green : Brushes.Red;
                 }
             }
