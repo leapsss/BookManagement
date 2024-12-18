@@ -23,6 +23,6 @@ namespace BookManagement.mapper
         public static List<SalesOrderDetail> getAllBySalesOrderId(int salesOrderId)
         {
             return DatabaseService.Instance.Db.Queryable<SalesOrderDetail>().Where(it => it.SalesOrderId == salesOrderId).ToList();
-        }
+        } 
     }
 }

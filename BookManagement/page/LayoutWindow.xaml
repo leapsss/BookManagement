@@ -47,6 +47,7 @@
             <Button Content="用户管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
             <Button Content="供货单信息" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
             <Button Content="供货单明细" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
+            <Button Content="进货管理" Width="180" Height="40" Margin="10,5" Style="{StaticResource MenuButtonStyle}"/>
         </StackPanel>
 
         <!-- 主工作区 -->

@@ -83,5 +83,10 @@ namespace BookManagement.mapper
 
             return result;
         }
+        
+        public static int Add(PurchaseOrder purchaseOrder)
+        {
+            return DatabaseService.Instance.Db.Insertable(purchaseOrder).ExecuteReturnIdentity();
+        }
     }
 }
