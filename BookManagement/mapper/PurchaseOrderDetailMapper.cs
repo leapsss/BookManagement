@@ -27,5 +27,9 @@ namespace BookManagement.mapper
                     (!maxPrice.HasValue || po.Price <= maxPrice))
                 .ToList();
         }
+        public static void Add(PurchaseOrderDetail purchaseOrderDetail)
+        {
+            DatabaseService.Instance.Db.Insertable(purchaseOrderDetail).ExecuteCommand();
+        }
     }
 }
