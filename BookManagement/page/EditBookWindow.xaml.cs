@@ -29,19 +29,7 @@ namespace BookManagement.page
         }
         public void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            _book.isbn = ISBNTextBox.Text;
-            _book.bookName = bookNameTextBox.Text;
-            _book.author = authorTextBox.Text;
-            _book.press = pressTextBox.Text;
-            _book.pressDate = pressDateTextBox.Text;
-            _book.clcName = clcNameTextBox.Text;          
-            _book.price = (int)(Convert.ToDecimal(priceTextBox.Text) * 100);
-            _book.bookDesc = bookDescTextBox.Text;
 
-            BookService bookService = new BookService();
-            bookService.updateBook(_book);
-            this.DialogResult = true;
-            this.Close();            
         }
     }
 }
