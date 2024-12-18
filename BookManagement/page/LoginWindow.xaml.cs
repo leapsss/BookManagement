@@ -81,7 +81,7 @@ namespace BookManagement.page
         {
             try
             {
-                return UserService.getUserById(userId);
+                return UserService.GetUserByUserId(userId);
             }
             catch (Exception ex)
             {

@@ -6,36 +6,42 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using BookManagement.entity;
 namespace BookManagement.mapper
 {
     class UserMapper
     {
-        public static User getUserById(string userId)
+        public static User GetUserById(int Id)
         {
-            return DatabaseService.Instance.Db.Queryable<BookManagement.entity.User>()
+            return DatabaseService.Instance.Db.Queryable<User>()
+                                           .First(u => u.id == Id);
+        }
+        public static User GetUserByUserId(string userId)
+        {
+            return DatabaseService.Instance.Db.Queryable<User>()
                                            .First(u => u.userId == userId);
         }
-        public static List<User> getUsers() {
-            return DatabaseService.Instance.Db.Queryable<BookManagement.entity.User>().ToList();
+
+        public static List<User> GetUsers() {
+            return DatabaseService.Instance.Db.Queryable<User>().ToList();
         }
-        public static void updateUser(User user)
+        public static void UpdateUser(User user)
         {
             DatabaseService.Instance.Db.Updateable(user).ExecuteCommand();
         }
-        public static void deleteUser(string userId) {
-            DatabaseService.Instance.Db.Deleteable<BookManagement.entity.User>().Where(it => it.userId == userId).ExecuteCommand();
+        public static void DeleteUser(string userId) {
+            DatabaseService.Instance.Db.Deleteable<User>().Where(it => it.userId == userId).ExecuteCommand();
         }
         public static List<User> GetPagedUsers(int pageIndex, int pageSize)
         {
-            return DatabaseService.Instance.Db.Queryable<BookManagement.entity.User>()
+            return DatabaseService.Instance.Db.Queryable<User>()
                                               .Skip((pageIndex - 1) * pageSize)
                                               .Take(pageSize)
                                               .ToList();
         }
         public static  List<User> GetFilteredUsers(String userId,string username,string role)
         {
-            var query = UserMapper.getUsers().AsQueryable();
+            var query = UserMapper.GetUsers().AsQueryable();
             if (!string.IsNullOrEmpty(userId))
             {
                 if (!string.IsNullOrEmpty(userId))

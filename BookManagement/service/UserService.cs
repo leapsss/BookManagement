@@ -11,20 +11,24 @@ namespace BookManagement.service
 {
     class UserService
     {
-        public static User getUserById(string userId)
+        public static User GetUserById(int Id)
         {
-            return UserMapper.getUserById(userId);
+            return UserMapper.GetUserById(Id);
+        }
+        public static User GetUserByUserId(string UserId)
+        {
+            return UserMapper.GetUserByUserId(UserId);
         }
         public  List<User> GetUsers()
         {
-            return UserMapper.getUsers();
+            return UserMapper.GetUsers();
         }
         public  void DeleteUser(string userId) {
-             UserMapper.deleteUser(userId);
+             UserMapper.DeleteUser(userId);
         }
         public  void UpdateUser(User user)
         {
-            UserMapper.updateUser(user);
+            UserMapper.UpdateUser(user);
         }
         public List<User> GetFilteredUsers(String userId, string username, string role)
         {

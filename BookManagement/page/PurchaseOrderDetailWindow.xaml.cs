@@ -1,5 +1,4 @@
-﻿using BookManagement.entity;
-using BookManagement.service;
+﻿using BookManagement.service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +11,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BookManagement.entity.Dto;
 namespace BookManagement.page
 {
     /// <summary>
-    /// PurchaseOrderDetailPage.xaml 的交互逻辑
+    /// PurchaseOrderDetailWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class PurchaseOrderDetailPage : Page
+    public partial class PurchaseOrderDetailWindow : Window
     {
         private readonly PurchaseOrderDetailService _dbOps;
         private List<PurchaseOrderDetailDto> allOrderDetails;
         private int currentPage = 1;
         private int pageSize = 15;
-        public PurchaseOrderDetailPage()
+        public PurchaseOrderDetailWindow(int purchaseOrderId)
         {
             InitializeComponent();
             _dbOps = new PurchaseOrderDetailService();
@@ -38,14 +36,15 @@ namespace BookManagement.page
             try
             {
                 allOrderDetails = _dbOps.GetPurchaseOrderDetailDtos();
-            }catch (Exception e)
+            }
+            catch (Exception e)
             {
                 MessageBox.Show("加载采购订单详情失败: " + e.Message);
             }
             LoadPageData();
         }
 
-     
+
 
         private List<PurchaseOrderDetailDto> FilterData()
         {
@@ -79,7 +78,7 @@ namespace BookManagement.page
             }
         }
 
-        private int totalPages=0;
+        private int totalPages = 0;
         private void LoadPageData()
         {
             var filteredData = FilterData();

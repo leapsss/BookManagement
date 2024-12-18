@@ -5,7 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using BookManagement.entity.Dto;
+using SqlSugar;
 namespace BookManagement.mapper
 {
     internal class PurchaseOrderMapper
@@ -25,65 +26,81 @@ namespace BookManagement.mapper
                                               .Take(pageSize)
                                               .ToList();
         }
-        public static List<PurchaseOrder> GetFilteredPurchaseOrders(string orderId, string supplierId, string purchaserId, DateTime? startDate, DateTime? endDate)
+        public static List<PurchaseOrder> GetPurchaseOrdersByUserId(int id)
         {
-            var query = PurchaseOrderMapper.GetPurchaseOrders().AsQueryable();
+            return DatabaseService.Instance.Db.Queryable<PurchaseOrder>().Where(it => it.PurchaserId == id).ToList();
+        }
+        public static List<PurchaseOrder> GetFilteredPurchaseOrders(string orderId, string supplierId, string purchaserId, DateTime? startDate, DateTime? endDate, string purchaserName, string supplierName)
+        {
+            // 开始构建 SQL 查询
+            StringBuilder sql = new StringBuilder();
+            sql.Append("SELECT po.purchase_order_id, po.supplier_id, po.order_date, po.purchaser_id ");
+            sql.Append("FROM purchase_order po ");
+            sql.Append("JOIN users us ON us.id = po.purchaser_id ");
+            sql.Append("JOIN supplier s ON s.supplier_id = po.supplier_id ");
+
+            // 根据传入的参数构建 WHERE 子句
+            List<string> conditions = new List<string>();
 
             if (!string.IsNullOrEmpty(orderId))
             {
-                if (int.TryParse(orderId, out int parsedOrderId))
-                {
-                    query = query.Where(po => po.PurchaseOrderId == parsedOrderId);
-                }
-                else
-                {
-                    return new List<PurchaseOrder>(); // 返回空列表
-                }
+                conditions.Add("po.purchase_order_id = @OrderId");
             }
+
             if (!string.IsNullOrEmpty(supplierId))
             {
-                if (int.TryParse(supplierId, out int parsedSupplierId))
-                {
-                    query = query.Where(po => po.SupplierId == parsedSupplierId);
-                }
-                else
-                {
-
-                    return new List<PurchaseOrder>(); // 返回空列表
-                }
+                conditions.Add("po.supplier_id = @SupplierId");
             }
 
             if (!string.IsNullOrEmpty(purchaserId))
             {
-                if (int.TryParse(purchaserId, out int parsedPurchaserId))
-                {
-                    query = query.Where(po => po.PurchaserId == parsedPurchaserId);
-                }
-                else
-                {
-
-                    return new List<PurchaseOrder>(); // 返回空列表
-                }
+                conditions.Add("po.purchaser_id = @PurchaserId");
             }
 
             if (startDate.HasValue)
-                query = query.Where(po => po.OrderDate >= startDate.Value);
+            {
+                conditions.Add("po.order_date >= @StartDate");
+            }
 
             if (endDate.HasValue)
-                query = query.Where(po => po.OrderDate <= endDate.Value);
-
-
-            var result = query.ToList();
-
-            if (!result.Any())
             {
-
-                return new List<PurchaseOrder>();
+                conditions.Add("po.order_date <= @EndDate");
             }
+
+            if (!string.IsNullOrEmpty(purchaserName))
+            {
+                conditions.Add("us.username LIKE @PurchaserName");
+            }
+
+            if (!string.IsNullOrEmpty(supplierName))
+            {
+                conditions.Add("s.supplier_name LIKE @SupplierName");
+            }
+
+            // 如果有过滤条件，使用 AND 连接它们
+            if (conditions.Count > 0)
+            {
+                sql.Append("WHERE " + string.Join(" AND ", conditions));
+            }
+
+            // 使用 SqlSugar 执行查询
+            var result = DatabaseService.Instance.Db.SqlQueryable<PurchaseOrder>(sql.ToString())
+                           .AddParameters(new
+                           {
+                               OrderId = orderId,
+                               SupplierId = supplierId,
+                               PurchaserId = purchaserId,
+                               StartDate = startDate,
+                               EndDate = endDate,
+                               PurchaserName = "%" + purchaserName + "%",
+                               SupplierName = "%" + supplierName + "%"
+                           })
+                           .ToList();
 
             return result;
         }
-        
+
+
         public static int Add(PurchaseOrder purchaseOrder)
         {
             return DatabaseService.Instance.Db.Insertable(purchaseOrder).ExecuteReturnIdentity();
