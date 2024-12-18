@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookManagement.page"
         mc:Ignorable="d" Loaded="Window_Loaded" WindowStartupLocation="CenterScreen"
-        Title="添加图书" Height="450" Width="350">
+        Title="添加图书" Height="600" Width="350">
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10">
@@ -45,7 +45,7 @@
 
             <StackPanel Orientation="Horizontal" Margin="10">
                 <Label Content="详情:" Width="63" VerticalAlignment="Center"/>
-                <TextBox Name="bookDescTextBox" Width="200" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                <TextBox Name="bookDescTextBox" Width="200" Height="150" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" Margin="40,0,0,0">
                 <Button Name="QueryButton" Content="查询" Width="100" Height="30" Margin="10" Click="QueryButton_Click"/>

@@ -42,7 +42,7 @@ namespace BookManagement.page
                 case "进货单明细":
                     hosFrame.Source = new Uri("PurchaseOrderDetailPage.xaml", UriKind.Relative);
                     break;
-                case "用户管理":
+                case "员工管理":
                     hosFrame.Source = new Uri("UserManagementPage.xaml", UriKind.Relative);
                     break;
                 case "库存管理":
