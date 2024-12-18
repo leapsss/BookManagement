@@ -60,6 +60,11 @@ namespace BookManagement.service
             return salesOrderDetailDTO;
         }
 
+        public List<CompleteSalesOrder> getAllCompleteSalesOrder()
+        {
+            return SalesOrderDetailMapper.getAllCompleteSalesOrder();
+        }
+
         public class SalesOrderDetailDTO
         {
             public string isbn {  get; set; }
@@ -81,5 +86,19 @@ namespace BookManagement.service
                 }
             }
         }
+
+        public class CompleteSalesOrder
+        {
+            public int salesOrderId { get; set; }
+            public string bookName { get; set; }
+            public string isbn { get; set; }
+            public DateOnly orderDate { get; set; }
+            public int amount { get; set; }
+            public decimal price { get; set; }
+            public string userId { get; set; }
+            public string username { get; set; }
+        }
+
+
     }
 }
