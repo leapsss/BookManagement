@@ -11,6 +11,8 @@ namespace BookManagement.entity
     public class User
     {
         [SugarColumn(IsPrimaryKey = true)]
+        public int id { get; set; }
+
         public string userId { get; set; }
 
         public string username { get; set; }

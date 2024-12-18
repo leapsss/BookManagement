@@ -36,7 +36,7 @@ namespace BookManagement.page
                 if (user.password == password)
                 {
                     // 保存当前用户ID到 Session
-                    Session.SetCurrentUserId(user.userId);
+                    Session.SetCurrentUserId(user.id);
 
                     //MessageBox.Show("登录成功！");
 
