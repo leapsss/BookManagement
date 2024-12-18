@@ -18,5 +18,14 @@ namespace BookManagement.mapper
         {
             return DatabaseService.Instance.Db.Queryable<PurchaseOrderDetail>().Where(it => it.PurchaseOrderDetailId == id).First();
         }
+        public static List<PurchaseOrderDetail> GetPurchaseOrderDetails(string orderId, string supplierId, decimal? minPrice, decimal? maxPrice)
+        {
+            return GetPurchaseOrderDetails()
+                .Where(po =>
+                    (string.IsNullOrEmpty(orderId) || po.PurchaseOrderId.ToString().Contains(orderId)) &&
+                    (!minPrice.HasValue || po.Price >= minPrice) &&
+                    (!maxPrice.HasValue || po.Price <= maxPrice))
+                .ToList();
+        }
     }
 }

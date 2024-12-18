@@ -2,6 +2,7 @@
 using BookManagement.mapper;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,14 @@ namespace BookManagement.service
         public  void UpdateUser(User user)
         {
             UserMapper.updateUser(user);
+        }
+        public List<User> GetFilteredUsers(String userId, string username, string role)
+        {
+            return UserMapper.GetFilteredUsers(userId, username, role);
+        }
+        public List<User> GetPagedUsers(int pageIndex, int pageSize)
+        {
+            return UserMapper.GetPagedUsers(pageIndex, pageSize);
         }
     }
 }

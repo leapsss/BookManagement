@@ -9,7 +9,7 @@ namespace BookManagement.entity
         public int SalesOrderId { get; set; } // 销售订单ID，复合主键
 
         [SugarColumn(ColumnName = "isbn", IsPrimaryKey = true)]
-        public string ISBN { get; set; } // ISBN号，复合主键
+        public string isbn { get; set; } // ISBN号，复合主键
 
         [SugarColumn(ColumnName = "amount")]
         public int Amount { get; set; } // 数量

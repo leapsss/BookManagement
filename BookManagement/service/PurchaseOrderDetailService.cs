@@ -21,12 +21,7 @@ namespace BookManagement.service
         }
         public List<PurchaseOrderDetail> GetPurchaseOrderDetails(string orderId, string supplierId, decimal? minPrice, decimal? maxPrice)
         {
-            return PurchaseOrderDetailMapper.GetPurchaseOrderDetails()
-                .Where(po =>
-                    (string.IsNullOrEmpty(orderId) || po.PurchaseOrderId.ToString().Contains(orderId)) &&
-                    (!minPrice.HasValue || po.Price >= minPrice) &&
-                    (!maxPrice.HasValue || po.Price <= maxPrice))
-                .ToList();
+            return PurchaseOrderDetailMapper.GetPurchaseOrderDetails(orderId, supplierId, minPrice, maxPrice);
         }
     }
 }
