@@ -138,7 +138,7 @@ namespace BookManagement.page
             // 判断是否已经存在
             foreach (var salesOrderDetailDTO in salesOrderDetailDTOList)
             {
-                if (salesOrderDetailDTOToInsert.isbn == salesOrderDetailDTO.isbn && salesOrderDetailDTOToInsert.price == salesOrderDetailDTO.price)
+                if (salesOrderDetailDTOToInsert.isbn == salesOrderDetailDTO.isbn)
                 {
                     if (salesOrderDetailDTOToInsert.amount + salesOrderDetailDTO.amount > salesOrderDetailDTO.inventory)
                     {
