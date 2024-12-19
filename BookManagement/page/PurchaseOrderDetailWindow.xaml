@@ -14,7 +14,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <!-- 搜索框行，自动根据内容高度调整 -->
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
             <!-- 数据展示区域，占据剩余空间 -->
             <RowDefinition Height="Auto"/>
             <!-- 分页按钮行 -->
@@ -51,14 +51,14 @@
         <DataGrid Name="PurchaseOrderDetailDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
           CanUserAddRows="False" SelectionMode="Single" Grid.Row="3">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="书名" Binding="{Binding BookName}" Width="*"/>
                 <DataGridTextColumn Header="订单编号" Binding="{Binding PurchaseOrderId}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="日期" Binding="{Binding OrderDate}" Width="*"/>
+                <DataGridTextColumn Header="书名" Binding="{Binding BookName}" Width="*"/>
+                <DataGridTextColumn Header="ISBN编码" Binding="{Binding Isbn}" Width="*"/>
                 <DataGridTextColumn Header="采购员ID" Binding="{Binding PurchaserId}" Width="*"/>
-                <DataGridTextColumn Header="采购员名称" Binding="{Binding Username}" Width="*"/>
+                <DataGridTextColumn Header="采购员姓名" Binding="{Binding Username}" Width="*"/>
                 <DataGridTextColumn Header="供货商ID" Binding="{Binding SupplierId}" Width="*"/>
                 <DataGridTextColumn Header="供货商名称" Binding="{Binding SupplierName}" Width="*"/>
-                <DataGridTextColumn Header="ISBN编码" Binding="{Binding Isbn}" Width="*"/>
-                <DataGridTextColumn Header="日期" Binding="{Binding OrderDate}" Width="*"/>
                 <DataGridTextColumn Header="数量" Binding="{Binding Amount}" Width="*"/>
                 <DataGridTextColumn Header="单价" Binding="{Binding Price}" Width="*"/>
                 <DataGridTextColumn Header="总价" Binding="{Binding TotalPrice}" Width="*"/>
