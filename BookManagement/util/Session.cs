@@ -7,6 +7,8 @@
 具体调用方法如下：*/
 
 
+using BookManagement.entity;
+
 namespace BookManagement.util
 {
     public static class Session
@@ -14,6 +16,7 @@ namespace BookManagement.util
 
         // 用于存储当前登录用户的ID
         private static int? _currentUserId;
+        private static User? _user = new User();
 
         /// <summary>
         /// 设置当前登录的用户ID
@@ -31,12 +34,24 @@ namespace BookManagement.util
             return _currentUserId;
         }
 
+        public static void SetCurrentUser(User user)
+        {
+            _user = user;
+        }
+
+        public static User? GetCurrentUser()
+        {
+            return _user;
+        }
+
         /// <summary>
         /// 清除当前用户ID（用户登出时调用）
         /// </summary>
         public static void Clear()
         {
             _currentUserId = null;
+            _user = null;
         }
+
     }
 }
