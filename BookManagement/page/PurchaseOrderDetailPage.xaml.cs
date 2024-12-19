@@ -36,7 +36,6 @@ namespace BookManagement.page
             int userId = (int)Session.GetCurrentUserId();
             role = UserService.GetUserById(userId).role;
             LoadPurchaseOrderDetails();
-            LoadPurchaseOrderDetails();
         }
         private void LoadPurchaseOrderDetails()
         {

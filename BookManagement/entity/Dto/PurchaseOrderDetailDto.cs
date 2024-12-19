@@ -14,8 +14,8 @@ namespace BookManagement.entity.Dto
 
         public int PurchaseOrderId { get; set; }
         public string SupplierId { get; set; }
-        public string SuplierName { get; set; }
-        public string PurchaseId { get; set; }
+        public string SupplierName { get; set; }
+        public string PurchaserId { get; set; }
         public string Username { get; set; }
         public string Isbn { get; set; }
         public DateTime OrderDate { get; set; }

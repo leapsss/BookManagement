@@ -31,37 +31,58 @@ namespace BookManagement.mapper
             return DatabaseService.Instance.Db.Queryable<PurchaseOrder>().Where(it => it.PurchaserId == id).ToList();
         }
         public static List<PurchaseOrder> GetFilteredPurchaseOrders(
-      string orderId,
-      string supplierId,
-      string purchaserId,
-      DateTime? startDate,
-      DateTime? endDate,
-      string purchaserName,
-      string supplierName,
-      int pageIndex,
-      int pageSize)
+     string orderId,
+     string supplierId,
+     string purchaserId,
+     DateTime? startDate,
+     DateTime? endDate,
+     string purchaserName,
+     string supplierName,
+     int pageIndex,
+     int pageSize)
         {
-            // Start building the SQL query
+            // 定义转换后的变量
+            int? orderIdInt = null;
+            int? supplierIdInt = null;
+            int? purchaserIdInt = null;
+
+            // 尝试将传入的字符串转换为整数
+            if (int.TryParse(orderId, out int tempOrderId))
+            {
+                orderIdInt = tempOrderId;
+            }
+
+            if (int.TryParse(supplierId, out int tempSupplierId))
+            {
+                supplierIdInt = tempSupplierId;
+            }
+
+            if (int.TryParse(purchaserId, out int tempPurchaserId))
+            {
+                purchaserIdInt = tempPurchaserId;
+            }
+
+            // 开始构建 SQL 查询
             StringBuilder sql = new StringBuilder();
             sql.Append("SELECT po.purchase_order_id, po.supplier_id, po.order_date, po.purchaser_id ");
             sql.Append("FROM purchase_order po ");
             sql.Append("JOIN users us ON us.id = po.purchaser_id ");
             sql.Append("JOIN supplier s ON s.supplier_id = po.supplier_id ");
 
-            // Build the WHERE clause based on the input parameters
+            // 构建 WHERE 子句
             List<string> conditions = new List<string>();
 
-            if (!string.IsNullOrEmpty(orderId))
+            if (orderIdInt.HasValue)
             {
                 conditions.Add("po.purchase_order_id = @OrderId");
             }
 
-            if (!string.IsNullOrEmpty(supplierId))
+            if (supplierIdInt.HasValue)
             {
                 conditions.Add("po.supplier_id = @SupplierId");
             }
 
-            if (!string.IsNullOrEmpty(purchaserId))
+            if (purchaserIdInt.HasValue)
             {
                 conditions.Add("po.purchaser_id = @PurchaserId");
             }
@@ -86,34 +107,35 @@ namespace BookManagement.mapper
                 conditions.Add("s.supplier_name LIKE @SupplierName");
             }
 
-            // If there are any filtering conditions, join them with AND
+            // 如果有任何过滤条件，将它们使用 AND 连接
             if (conditions.Count > 0)
             {
                 sql.Append("WHERE " + string.Join(" AND ", conditions));
             }
 
-            // Add pagination using OFFSET and FETCH NEXT (SQL Server syntax)
+            // 添加分页
             sql.Append(" ORDER BY po.purchase_order_id ");
             sql.Append("OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY");
 
-            // Execute the query using SqlSugar
+            // 执行查询
             var result = DatabaseService.Instance.Db.SqlQueryable<PurchaseOrder>(sql.ToString())
                 .AddParameters(new
                 {
-                    OrderId = orderId,
-                    SupplierId = supplierId,
-                    PurchaserId = purchaserId,
+                    OrderId = orderIdInt,
+                    SupplierId = supplierIdInt,
+                    PurchaserId = purchaserIdInt,
                     StartDate = startDate,
                     EndDate = endDate,
                     PurchaserName = "%" + purchaserName + "%",
                     SupplierName = "%" + supplierName + "%",
-                    Offset = (pageIndex - 1) * pageSize,  // Calculate offset
+                    Offset = (pageIndex - 1) * pageSize, // 计算偏移量
                     PageSize = pageSize
                 })
                 .ToList();
 
             return result;
         }
+
 
 
 

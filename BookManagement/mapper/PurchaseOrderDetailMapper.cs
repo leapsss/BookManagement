@@ -54,7 +54,28 @@ namespace BookManagement.mapper
     int pageIndex,
     int pageSize)
         {
-            // Start building the SQL query
+            // 定义转换后的变量
+            int? orderIdInt = null;
+            int? supplierIdInt = null;
+            int? purchaserIdInt = null;
+
+            // 尝试将传入的字符串转换为整数
+            if (int.TryParse(orderId, out int tempOrderId))
+            {
+                orderIdInt = tempOrderId;
+            }
+
+            if (int.TryParse(supplierId, out int tempSupplierId))
+            {
+                supplierIdInt = tempSupplierId;
+            }
+
+            if (int.TryParse(purchaserId, out int tempPurchaserId))
+            {
+                purchaserIdInt = tempPurchaserId;
+            }
+
+            // 开始构建 SQL 查询
             StringBuilder sql = new StringBuilder();
             sql.Append("SELECT pod.purchase_order_detail_id, pod.purchase_order_id, po.supplier_id, sp.supplier_name, ");
             sql.Append("po.purchaser_id, us.username, pod.isbn, bo.book_name, pod.amount, ");
@@ -65,10 +86,10 @@ namespace BookManagement.mapper
             sql.Append("JOIN book bo ON bo.isbn = pod.isbn ");
             sql.Append("JOIN users us ON us.id = po.purchaser_id ");
 
-            // Build WHERE conditions
+            // 构建 WHERE 条件
             List<string> conditions = new List<string>();
 
-            if (!string.IsNullOrEmpty(orderId))
+            if (orderIdInt.HasValue)
             {
                 conditions.Add("pod.purchase_order_id = @OrderId");
             }
@@ -83,12 +104,12 @@ namespace BookManagement.mapper
                 conditions.Add("sp.supplier_name LIKE @SupplierName");
             }
 
-            if (!string.IsNullOrEmpty(supplierId))
+            if (supplierIdInt.HasValue)
             {
                 conditions.Add("po.supplier_id = @SupplierId");
             }
 
-            if (!string.IsNullOrEmpty(purchaserId))
+            if (purchaserIdInt.HasValue)
             {
                 conditions.Add("po.purchaser_id = @PurchaserId");
             }
@@ -118,39 +139,40 @@ namespace BookManagement.mapper
                 conditions.Add("po.order_date <= @EndDate");
             }
 
-            // If there are any filtering conditions, join them with AND
+            // 如果有任何过滤条件，将它们使用 AND 连接
             if (conditions.Count > 0)
             {
                 sql.Append("WHERE " + string.Join(" AND ", conditions));
             }
 
-            // Add ORDER BY clause to support pagination
-            sql.Append(" ORDER BY pod.purchase_order_detail_id ");  // Or use another column depending on your requirement
+            // 添加 ORDER BY 子句以支持分页
+            sql.Append(" ORDER BY pod.purchase_order_detail_id "); // 可根据需求选择其他列排序
 
-            // Add pagination using OFFSET and FETCH NEXT (SQL Server syntax)
+            // 添加分页 OFFSET 和 FETCH NEXT（SQL Server 语法）
             sql.Append(" OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY");
 
-            // Execute the query using SqlSugar
+            // 使用 SqlSugar 执行查询
             var result = DatabaseService.Instance.Db.SqlQueryable<PurchaseOrderDetailDto>(sql.ToString())
                 .AddParameters(new
                 {
-                    OrderId = orderId,
+                    OrderId = orderIdInt,
                     Isbn = isbn,
                     SupplierName = "%" + supplierName + "%",
-                    SupplierId = supplierId,
-                    PurchaserId = purchaserId,
+                    SupplierId = supplierIdInt,
+                    PurchaserId = purchaserIdInt,
                     Username = "%" + username + "%",
                     MinPrice = minPrice,
                     MaxPrice = maxPrice,
                     StartDate = startDate,
                     EndDate = endDate,
-                    Offset = (pageIndex - 1) * pageSize,  // Calculate the offset
+                    Offset = (pageIndex - 1) * pageSize, // 计算偏移量
                     PageSize = pageSize
                 })
                 .ToList();
 
             return result;
         }
+
 
         public static void Add(PurchaseOrderDetail purchaseOrderDetail)
         {

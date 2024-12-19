@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using BookManagement.entity.Dto;
 using BookManagement.util;
 using System.Data;
+using BookManagement.entity;
 namespace BookManagement.page
 {
     /// <summary>
@@ -33,11 +34,14 @@ namespace BookManagement.page
             _dbOps = new PurchaseOrderDetailService();
             int userId = (int)Session.GetCurrentUserId();
             role = UserService.GetUserById(userId).role;
+            OrderIdTextBox.Text = purchaseOrderId.ToString();
+            OrderIdTextBox.IsEnabled = false;
             LoadPurchaseOrderDetails();
         }
         private void LoadPurchaseOrderDetails()
         {
-            if(role == "purchaser")
+            
+            if (role == "purchaser")
             {
                 try
                 {
@@ -52,7 +56,7 @@ namespace BookManagement.page
                 {
                     MessageBox.Show("加载采购订单详情失败: " + e.Message);
                 }
-                
+
             }
             else if (role == "admin")
             {
@@ -64,13 +68,9 @@ namespace BookManagement.page
                 {
                     MessageBox.Show("加载采购订单详情失败: " + e.Message);
                 }
-                
+
             }
-
         }
-
-
-
         private List<PurchaseOrderDetailDto> FilterData()
         {
             string orderId = OrderIdTextBox.Text;

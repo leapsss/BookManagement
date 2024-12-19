@@ -56,6 +56,7 @@ namespace BookManagement.page
             {
                 try
                 {
+
                     SupplierIdTextBox.IsEnabled = true;
                     SupplierNameTextBox.IsEnabled = true;
                     PurchaserIdTextBox.IsEnabled = true;
@@ -64,7 +65,6 @@ namespace BookManagement.page
                     EndDatePicker.IsEnabled = true;
                     MinPriceTextBox.IsEnabled = true;
                     MaxPriceTextBox.IsEnabled = true;
-                    PurchaseOrderDataGrid.ItemsSource = purchaseOrderService.GetPurchaseOrders();
                     LoadPageData();
                 }
                 catch (Exception e)
@@ -72,8 +72,6 @@ namespace BookManagement.page
                     MessageBox.Show("加载采购订单失败: " + e.Message);
                 }
             }
-            PurchaseOrderDataGrid.ItemsSource = purchaseOrderService.GetPurchaseOrders();
-            LoadPageData();
         }
         private int currentPage = 1;
         private const int pageSize = 15;
@@ -94,90 +92,89 @@ namespace BookManagement.page
             decimal? maxPrice = null;
 
             // 解析 minPrice 和 maxPrice
-            if (!string.IsNullOrEmpty(minPriceText))
+           
+
+            try
             {
-                if (decimal.TryParse(minPriceText, out decimal parsedMinPrice))
-                {
-                    minPrice = parsedMinPrice;
-                }
-                else
-                {
-                    MessageBox.Show("请输入正确的最低价格");
-                    return;
-                }
+                // 获取所有分页数据（没有价格过滤）
+                var pagedData = purchaseOrderService.GetFilteredPurchaseOrders(orderId, supplierId, purchaserId, startDate, endDate, purchaserName, supplierName, currentPage, pageSize);
 
-            }
+                // 转换成 DTO 列表
+                var pagedDataDto = new List<PurchaseOrderDto>();
 
-            if (!string.IsNullOrEmpty(maxPriceText))
-            {
-                if (decimal.TryParse(maxPriceText, out decimal parsedMaxPrice))
+                foreach (var po in pagedData)
                 {
-                    maxPrice = parsedMaxPrice;
-                }
-                else
-                {
-                    MessageBox.Show("请输入正确的最低价格");
-                    return;
-                }
-
-                try
-                {
-                    // 获取所有分页数据（没有价格过滤）
-                    var pagedData = purchaseOrderService.GetFilteredPurchaseOrders(orderId, supplierId, purchaserId, startDate, endDate, purchaserName, supplierName, currentPage, pageSize);
-
-                    // 转换成 DTO 列表
-                    var pagedDataDto = new List<PurchaseOrderDto>();
-
-                    foreach (var po in pagedData)
+                    var dto = new PurchaseOrderDto
                     {
-                        var dto = new PurchaseOrderDto
+                        PurchaseOrderId = po.PurchaseOrderId,
+                        SupplierId = po.SupplierId,
+                        SupplierName = purchaseOrderService.GetSupplierById((int)po.SupplierId).SupplierName, // Placeholder value for now
+                        OrderDate = po.OrderDate,
+                        PurchaserId = po.PurchaserId,
+                        PurchaserName = purchaseOrderService.GetUserById((int)po.PurchaserId).username, // Placeholder value for now
+                        Price = purchaseOrderService.GetTotalPrice((int)po.PurchaseOrderId) // Placeholder value for now
+                    };
+                    if (!string.IsNullOrEmpty(minPriceText))
+                    {
+                        if (decimal.TryParse(minPriceText, out decimal parsedMinPrice))
                         {
-                            PurchaseOrderId = po.PurchaseOrderId,
-                            SupplierId = po.SupplierId,
-                            SupplierName = purchaseOrderService.GetSupplierById((int)po.SupplierId).SupplierName, // Placeholder value for now
-                            OrderDate = po.OrderDate,
-                            PurchaserId = po.PurchaserId,
-                            PurchaserName = purchaseOrderService.GetUserById((int)po.PurchaserId).username, // Placeholder value for now
-                            Price = purchaseOrderService.GetTotalPrice((int)po.PurchaseOrderId) // Placeholder value for now
-                        };
+                            minPrice = parsedMinPrice;
+                            if (minPrice.HasValue && dto.Price < minPrice.Value)
+                                continue;  // 如果价格小于 minPrice，跳过该项
+                        }
+                        else
+                        {
+                            MessageBox.Show("请输入正确的最低价格");
+                            return;
+                        }
 
-                        // 过滤价格
-                        if (minPrice.HasValue && dto.Price < minPrice.Value)
-                            continue;  // 如果价格小于 minPrice，跳过该项
-
-                        if (maxPrice.HasValue && dto.Price > maxPrice.Value)
-                            continue;  // 如果价格大于 maxPrice，跳过该项
-
-                        // 将符合条件的 DTO 添加到列表
-                        pagedDataDto.Add(dto);
                     }
+                    // 过滤价格
 
-                    // 设置数据源
-                    PurchaseOrderDataGrid.ItemsSource = pagedDataDto;
-                    var totalData = purchaseOrderService.GetPurchaseOrders();
-                    totalPages = (int)Math.Ceiling(totalData.Count / (double)pageSize);
-                    PageInfoText.Text = $"第 {currentPage} 页 / 共 {totalPages} 页";
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                    if (!string.IsNullOrEmpty(maxPriceText))
+                    {
+                        if (decimal.TryParse(maxPriceText, out decimal parsedMaxPrice))
+                        {
+                            maxPrice = parsedMaxPrice;
+                            if (maxPrice.HasValue && dto.Price > maxPrice.Value)
+                                continue;  // 如果价格大于 maxPrice，跳过该项
+                        }
+                        else
+                        {
+                            MessageBox.Show("请输入正确的最低价格");
+                            return;
+                        }
 
+                    }
+                    // 将符合条件的 DTO 添加到列表
+                    pagedDataDto.Add(dto);
+                }
+                // 设置数据源
+                PurchaseOrderDataGrid.ItemsSource = pagedDataDto;
+                var totalData = purchaseOrderService.GetPurchaseOrders();
+                totalPages = (int)Math.Ceiling(totalData.Count / (double)pageSize);
+                PageInfoText.Text = $"第 {currentPage} 页 / 共 {totalPages} 页";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void ToPurchaseOrderDetailWindowButton_Click(object sender, RoutedEventArgs e)
         {
             // Implement the Edit functionality here
+           
             var purchaseOrderDto = ((Button)sender).DataContext as PurchaseOrderDto;
             //打开编辑界面
             // Open edit dialog or navigate to the edit page with the selected user
             if (purchaseOrderDto != null)
             {
+ 
                 // 创建并显示 UserUpdateWindow
                 var purchaseOrderDetailWindow = new PurchaseOrderDetailWindow(purchaseOrderDto.PurchaseOrderId);
+                purchaseOrderDetailWindow.Show();
 
-                // 设置为模式对话框（等待用户操作完成）
 
             }
         }
