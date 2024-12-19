@@ -11,9 +11,9 @@ namespace BookManagement.service
 {
     class UserService
     {
-        public static User getUserById(string userId)
+        public static User getUserByIdAndPassword(string userId,string password)
         {
-            return UserMapper.getUserById(userId);
+            return UserMapper.getUserByIdAndPassword(userId, password);
         }
         public  List<User> GetUsers()
         {

@@ -11,6 +11,7 @@ namespace BookManagement.page
     public partial class EditBookWindow : Window
     {
         private Book _book;
+        private BookService _bookService = new BookService();
 
         public EditBookWindow(Book book)
         {
@@ -29,7 +30,19 @@ namespace BookManagement.page
         }
         public void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
+            _book.isbn = ISBNTextBox.Text;
+            _book.bookName = bookNameTextBox.Text;
+            _book.author = authorTextBox.Text;
+            _book.press = pressTextBox.Text;
+            _book.pressDate = pressDateTextBox.Text;
+            _book.clcName = clcNameTextBox.Text;
+            _book.price = (int)(Convert.ToDecimal(priceTextBox.Text) * 100);
+            _book.bookDesc = bookDescTextBox.Text;
 
+
+            _bookService.updateBook(_book);
+            this.DialogResult = true;
+            this.Close();
         }
     }
 }

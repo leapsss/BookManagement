@@ -1,18 +1,6 @@
 ﻿using BookManagement.service;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using static BookManagement.service.SalesOrderService;
 
 namespace BookManagement.page
@@ -22,7 +10,11 @@ namespace BookManagement.page
     /// </summary>
     public partial class SalesOrderDetailPage : Page
     {
-        private SalesOrderService _salesOrderService = new SalesOrderService();
+
+        private int _pageSize = 15;
+        private int _currentPage = 1;
+        private int _totalRecords = 0; 
+        private int _totalPages = 0;
 
         public SalesOrderDetailPage()
         {
@@ -30,23 +22,78 @@ namespace BookManagement.page
             ShowSalesOrderDetail();
         }
 
-        public void ShowSalesOrderDetail()
+        private void ShowSalesOrderDetail()
         {
-            List<CompleteSalesOrder> completeSalesOrders = _salesOrderService.getAllCompleteSalesOrder();
+            try { 
+                _totalRecords = SalesOrderService.GetgetAllCompleteSalesOrderCount();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            _totalPages = (int)Math.Ceiling((double)_totalRecords / _pageSize);
+
+            int? salesOrderId = null;
+            if (int.TryParse(SalesOrderIdTextBox.Text, out int parsedSalesOrderId))
+            {
+                salesOrderId = parsedSalesOrderId;
+            }
+            string? isbn = ISBNTextBox.Text;
+            string? userId = UserIdTextBox.Text;
+
+            DateOnly? startOrderDate = null;
+            if (DateOnly.TryParse(StartOrderDateTextBox.Text, out DateOnly parsedStartOrderDate))
+            {
+                startOrderDate = parsedStartOrderDate;
+            }
+            DateOnly? endOrderDate = null;
+
+            if (DateOnly.TryParse(EndOrderDateTextBox.Text, out DateOnly parsedEndOrderDate))
+            {
+                endOrderDate = parsedEndOrderDate;
+            }
+            List<CompleteSalesOrder> completeSalesOrders = new List<CompleteSalesOrder>();
+            try { 
+                completeSalesOrders = SalesOrderService.GetCompleteSalesOrdersByMultipleConditions(_currentPage, _pageSize, salesOrderId, isbn, userId, startOrderDate, endOrderDate);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            PageInfoText.Text = $"当前第{_currentPage}页，共{_totalPages}页";
             CompleteSalesOrderDataGrid.ItemsSource = completeSalesOrders;
         }
 
-        public void PreviousPageButton_Click(object sender, RoutedEventArgs e)
+        private void PreviousPageButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if (_currentPage > 1)
+            {
+                _currentPage--;
+                ShowSalesOrderDetail(); // 重新加载数据
+            }
+            else
+            {
+                MessageBox.Show("已经是第一页！");
+            }
         }
         private void NextPageButton_Click(object sender, RoutedEventArgs e)
         {
+            if (_currentPage < _totalPages)
+            {
+                _currentPage++;
+                ShowSalesOrderDetail(); // 重新加载数据
+            }
+            else
+            {
+                MessageBox.Show("已经是最后一页！");
+            }
         }
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-
+            ShowSalesOrderDetail();
         }
+
+        
     }
 
 }

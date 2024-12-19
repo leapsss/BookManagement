@@ -1,39 +1,35 @@
 ﻿using BookManagement.entity;
 using BookManagement.util;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BookManagement.mapper
 {
     class UserMapper
     {
-        public static User getUserById(string userId)
+        public static User? getUserByIdAndPassword(string userId,string password)
         {
-            return DatabaseService.Instance.Db.Queryable<BookManagement.entity.User>()
-                                           .First(u => u.userId == userId);
+            return DatabaseService.Instance.Db.Queryable<User>()
+                                           .Where(u => u.userId == userId && u.password == password)
+                                           .First();
         }
         public static List<User> getUsers() {
-            return DatabaseService.Instance.Db.Queryable<BookManagement.entity.User>().ToList();
+            return DatabaseService.Instance.Db.Queryable<User>().ToList();
         }
         public static void updateUser(User user)
         {
             DatabaseService.Instance.Db.Updateable(user).ExecuteCommand();
         }
         public static void deleteUser(string userId) {
-            DatabaseService.Instance.Db.Deleteable<BookManagement.entity.User>().Where(it => it.userId == userId).ExecuteCommand();
+            DatabaseService.Instance.Db.Deleteable<User>().Where(it => it.userId == userId).ExecuteCommand();
         }
         public static List<User> GetPagedUsers(int pageIndex, int pageSize)
         {
-            return DatabaseService.Instance.Db.Queryable<BookManagement.entity.User>()
+            return DatabaseService.Instance.Db.Queryable<User>()
                                               .Skip((pageIndex - 1) * pageSize)
                                               .Take(pageSize)
                                               .ToList();
         }
-        public static  List<User> GetFilteredUsers(String userId,string username,string role)
+        public static  List<User> GetFilteredUsers(string userId,string username,string role)
         {
             var query = UserMapper.getUsers().AsQueryable();
             if (!string.IsNullOrEmpty(userId))
@@ -85,6 +81,6 @@ namespace BookManagement.mapper
 
             return result;
         }
-        }
+    }
 
 }
