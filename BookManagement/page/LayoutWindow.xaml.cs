@@ -89,6 +89,7 @@ namespace BookManagement.page
             PurchaseOrderButton.Visibility = Visibility.Collapsed;
             PurchaseOrderDetailButton.Visibility = Visibility.Visible;
             SalesManagementButton.Visibility = Visibility.Collapsed;
+            SalesOrderButton.Visibility = Visibility.Collapsed;
             SalesOrderDetailButton.Visibility = Visibility.Visible;
             ReportStatisticsButton.Visibility = Visibility.Visible;
         }
@@ -104,6 +105,7 @@ namespace BookManagement.page
             PurchaseOrderButton.Visibility = Visibility.Visible;
             PurchaseOrderDetailButton.Visibility = Visibility.Collapsed;
             SalesManagementButton.Visibility = Visibility.Collapsed;
+            SalesOrderButton.Visibility = Visibility.Collapsed;
             SalesOrderDetailButton.Visibility = Visibility.Collapsed;
             ReportStatisticsButton.Visibility = Visibility.Collapsed;
         }
@@ -119,6 +121,7 @@ namespace BookManagement.page
             PurchaseOrderButton.Visibility = Visibility.Collapsed;
             PurchaseOrderDetailButton.Visibility = Visibility.Collapsed;
             SalesManagementButton.Visibility = Visibility.Visible;
+            SalesOrderButton.Visibility = Visibility.Visible;
             SalesOrderDetailButton.Visibility = Visibility.Collapsed;
             ReportStatisticsButton.Visibility = Visibility.Collapsed;
         }
