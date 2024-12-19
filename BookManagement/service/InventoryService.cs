@@ -12,6 +12,33 @@ namespace BookManagement.service
             return InventoryMapper.GetAllInventory();
         }
 
+        public List<InventoryDisplay> GetAllInventoryWithBookName()
+        {
+            var inventories = InventoryMapper.GetAllInventory();
+            var result = new List<InventoryDisplay>();
+
+            foreach (var inventory in inventories)
+            {
+                var book = BookMapper.getBookByISBN(inventory.Isbn);
+                result.Add(new InventoryDisplay
+                {
+                    InventoryId = inventory.InventoryId,
+                    Isbn = inventory.Isbn,
+                    BookName = book?.bookName ?? "未知书名",
+                    Quantity = inventory.Quantity,
+                    LastUpdated = inventory.LastUpdated
+                });
+            }
+
+            return result;
+        }
+
+        public string GetBookNameByIsbn(string isbn)
+        {
+            var book = BookMapper.getBookByISBN(isbn);
+            return book?.bookName ?? "未知书名";
+        }
+
         public Inventory GetInventoryByIsbn(string isbn)
         {
             return InventoryMapper.GetInventoryByIsbn(isbn);
@@ -35,6 +62,15 @@ namespace BookManagement.service
             }
 
             InventoryMapper.RemoveInventory(isbn, quantity);
+        }
+
+        public class InventoryDisplay
+        {
+            public int InventoryId { get; set; }
+            public string Isbn { get; set; }
+            public string BookName { get; set; }
+            public int Quantity { get; set; }
+            public DateTime LastUpdated { get; set; }
         }
     }
 }
