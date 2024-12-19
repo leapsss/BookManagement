@@ -8,50 +8,131 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PurchaseOrderPage">
 
-    <Grid>
-        <!-- 定义行和列 -->
+    <Page.Resources>
+        <!-- 现代风格按钮样式 -->
+        <Style x:Key="ModernButton" TargetType="Button">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="15,8"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" 
+                                CornerRadius="4">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#1976D2"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- 现代风格文本框样式 -->
+        <Style x:Key="ModernTextBox" TargetType="TextBox">
+            <Setter Property="Padding" Value="8,6"/>
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="#BDBDBD"/>
+            <Setter Property="Background" Value="#F5F5F5"/>
+            <Style.Triggers>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#2196F3"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- 现代风格DatePicker样式 -->
+        <Style x:Key="ModernDatePicker" TargetType="DatePicker">
+            <Setter Property="BorderThickness" Value="0,0,0,1"/>
+            <Setter Property="BorderBrush" Value="#BDBDBD"/>
+            <Setter Property="Background" Value="#F5F5F5"/>
+        </Style>
+
+        <!-- 现代风格TextBlock样式 -->
+        <Style x:Key="ModernTextBlock" TargetType="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,0,5,0"/>
+            <Setter Property="Foreground" Value="#424242"/>
+        </Style>
+
+        <!-- DataGrid样式 -->
+        <Style TargetType="DataGrid">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="#E0E0E0"/>
+            <Setter Property="GridLinesVisibility" Value="None"/>
+            <Setter Property="RowBackground" Value="White"/>
+            <Setter Property="AlternatingRowBackground" Value="#F5F5F5"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="Background" Value="#2196F3"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="10"/>
+            <Setter Property="BorderThickness" Value="0,0,1,0"/>
+            <Setter Property="BorderBrush" Value="#1976D2"/>
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <!-- 搜索框行，自动根据内容高度调整 -->
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
-            <!-- 数据展示区域，占据剩余空间 -->
-            <RowDefinition Height="Auto"/>
-            <!-- 分页按钮行 -->
         </Grid.RowDefinitions>
 
-        <!-- 搜索框区域 -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10" Grid.Row="0">
-            <TextBlock Text="订单编号:" />
-            <TextBox Name="OrderIdTextBox" Width="150" Margin="5" />
-            <TextBlock Text="供货商编号:" />
-            <TextBox Name="SupplierIdTextBox" Width="150" Margin="5"  />
-            <TextBlock Text="采购员编号:" />
-            <TextBox Name="PurchaserIdTextBox" Width="150" Margin="5"  />
-            <Button Content="搜索" Width="100" Margin="5" Click="SearchButton_Click"/>
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1">
-            <TextBlock Text="采购员名称:" />
-            <TextBox Name="PurchaserNameTextBox" Width="150" Margin="5" />
-            <TextBlock Text="供货商名称:" />
-            <TextBox Name="SupplierNameTextBox" Width="150" Margin="5"  />
-        </StackPanel>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10" Grid.Row="2">
-            <TextBlock Text="价格区间:" VerticalAlignment="Center"/>
-            <TextBlock Text="最低价格:" />
-            <TextBox Name="MinPriceTextBox" Width="80" Margin="5"/>
-            <TextBlock Text="—" VerticalAlignment="Center"/>
-            <TextBlock Text="最高价格:" />
-            <TextBox Name="MaxPriceTextBox" Width="80" Margin="5" />
-            <TextBlock Text="开始日期:" />
-            <DatePicker Name="StartDatePicker" Width="150" Margin="5" />
-            <TextBlock Text="结束日期:" />
-            <DatePicker Name="EndDatePicker" Width="150" Margin="5" />
-        </StackPanel>
+        <!-- 搜索区域 -->
+        <Border Grid.Row="0" Background="#FAFAFA" Padding="20,15" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <TextBlock Text="订单编号:" Style="{StaticResource ModernTextBlock}"/>
+                <TextBox Name="OrderIdTextBox" Width="150" Margin="0,0,15,0" Style="{StaticResource ModernTextBox}"/>
+                <TextBlock Text="供货商编号:" Style="{StaticResource ModernTextBlock}"/>
+                <TextBox Name="SupplierIdTextBox" Width="150" Margin="0,0,15,0" Style="{StaticResource ModernTextBox}"/>
+                <TextBlock Text="采购员编号:" Style="{StaticResource ModernTextBlock}"/>
+                <TextBox Name="PurchaserIdTextBox" Width="150" Margin="0,0,15,0" Style="{StaticResource ModernTextBox}"/>
+                <Button Content="搜索" Width="100" Style="{StaticResource ModernButton}"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="1" Background="#FAFAFA" Padding="20,15" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <TextBlock Text="采购员名称:" Style="{StaticResource ModernTextBlock}"/>
+                <TextBox Name="PurchaserNameTextBox" Width="150" Margin="0,0,15,0" Style="{StaticResource ModernTextBox}"/>
+                <TextBlock Text="供货商名称:" Style="{StaticResource ModernTextBlock}"/>
+                <TextBox Name="SupplierNameTextBox" Width="150" Style="{StaticResource ModernTextBox}"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" Background="#FAFAFA" Padding="20,15" Margin="0,0,0,10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch">
+                <TextBlock Text="价格区间:" Style="{StaticResource ModernTextBlock}"/>
+                <TextBlock Text="最低价格:" Style="{StaticResource ModernTextBlock}"/>
+                <TextBox Name="MinPriceTextBox" Width="80" Margin="0,0,5,0" Style="{StaticResource ModernTextBox}"/>
+                <TextBlock Text="—" Style="{StaticResource ModernTextBlock}"/>
+                <TextBlock Text="最高价格:" Style="{StaticResource ModernTextBlock}"/>
+                <TextBox Name="MaxPriceTextBox" Width="80" Margin="0,0,15,0" Style="{StaticResource ModernTextBox}"/>
+                <TextBlock Text="开始日期:" Style="{StaticResource ModernTextBlock}"/>
+                <DatePicker Name="StartDatePicker" Width="150" Margin="0,0,15,0" Style="{StaticResource ModernDatePicker}"/>
+                <TextBlock Text="结束日期:" Style="{StaticResource ModernTextBlock}"/>
+                <DatePicker Name="EndDatePicker" Width="150" Style="{StaticResource ModernDatePicker}"/>
+            </StackPanel>
+        </Border>
+
         <!-- 数据展示区域 -->
-        <DataGrid Name="PurchaseOrderDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                  CanUserAddRows="False" SelectionMode="Single" Grid.Row="3">
+        <DataGrid Name="PurchaseOrderDataGrid" 
+                  Grid.Row="3" 
+                  Margin="20,10"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False"
+                  SelectionMode="Single"
+                  RowHeight="40">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="订单编号" Binding="{Binding PurchaseOrderId}" IsReadOnly="True" Width="*"/>
                 <DataGridTextColumn Header="供货商编号" Binding="{Binding SupplierId}" Width="*"/>
@@ -63,20 +144,23 @@
                 <DataGridTemplateColumn Header="操作" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                <Button Content="产看详情" Margin="5" Click="ToPurchaseOrderDetailWindowButton_Click"/>
-                            </StackPanel>
+                            <Button Content="查看详情" 
+                                    Style="{StaticResource ModernButton}"
+                                    Click="ToPurchaseOrderDetailWindowButton_Click"
+                                    Padding="10,5"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
 
-        <!-- 分页按钮区域 -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="4">
-            <Button Content="上一页" Click="PreviousPageButton_Click" />
-            <TextBlock Name="PageInfoText" VerticalAlignment="Center" Margin="10"/>
-            <Button Content="下一页" Click="NextPageButton_Click" />
-        </StackPanel>
+        <!-- 分页控件 -->
+        <Border Grid.Row="4" Background="#FAFAFA" Padding="10">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Content="上一页" Style="{StaticResource ModernButton}" Margin="0,0,10,0" Click="PreviousPageButton_Click"/>
+                <TextBlock Name="PageInfoText" VerticalAlignment="Center" Margin="10" Style="{StaticResource ModernTextBlock}"/>
+                <Button Content="下一页" Style="{StaticResource ModernButton}" Margin="10,0,0,0" Click="NextPageButton_Click"/>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>
