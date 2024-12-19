@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using BookManagement.entity;
+using BookManagement.util;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace BookManagement.page
 {
@@ -23,7 +13,9 @@ namespace BookManagement.page
         public LayoutWindow()
         {
             InitializeComponent();
+            PermissionControl();
         }
+        
         private void Router(object sender, RoutedEventArgs e)
         {
             Button btn = e.Source as Button;
@@ -62,5 +54,86 @@ namespace BookManagement.page
                     break;
             }
         }
+
+        private void PermissionControl()
+        {
+            User? user = Session.GetCurrentUser();
+           
+            switch (user.role)
+            {
+                case "admin":
+                    ShowAdminButtons();
+                    break;
+                case "purchaser":
+                    ShowPurchaserButtons();
+                    break;
+                case "saler":
+                    ShowSalerButtons();
+                    break;
+                default:
+                    ShowDefaultButtons();
+                    break;
+            }
+            
+        }
+        private void ShowAdminButtons()
+        {
+            UserManagementButton.Visibility = Visibility.Visible;
+            InventoryManagementButton.Visibility = Visibility.Visible;
+            BookManagementButton.Visibility = Visibility.Collapsed;
+            SupplierManagementButton.Visibility = Visibility.Collapsed;
+            PurchaseManagementButton.Visibility = Visibility.Collapsed;
+            PurchaseOrderButton.Visibility = Visibility.Collapsed;
+            PurchaseOrderDetailButton.Visibility = Visibility.Visible;
+            SalesManagementButton.Visibility = Visibility.Collapsed;
+            SalesOrderDetailButton.Visibility = Visibility.Visible;
+            ReportStatisticsButton.Visibility = Visibility.Visible;
+        }
+
+        // 显示进货员角色的按钮
+        private void ShowPurchaserButtons()
+        {
+            UserManagementButton.Visibility = Visibility.Collapsed;
+            InventoryManagementButton.Visibility = Visibility.Collapsed;
+            BookManagementButton.Visibility = Visibility.Visible;
+            SupplierManagementButton.Visibility = Visibility.Visible;
+            PurchaseManagementButton.Visibility = Visibility.Visible;
+            PurchaseOrderButton.Visibility = Visibility.Visible;
+            PurchaseOrderDetailButton.Visibility = Visibility.Collapsed;
+            SalesManagementButton.Visibility = Visibility.Collapsed;
+            SalesOrderDetailButton.Visibility = Visibility.Collapsed;
+            ReportStatisticsButton.Visibility = Visibility.Collapsed;
+        }
+
+        // 显示售货员角色的按钮
+        private void ShowSalerButtons()
+        {
+            UserManagementButton.Visibility = Visibility.Collapsed;
+            InventoryManagementButton.Visibility = Visibility.Visible;
+            BookManagementButton.Visibility = Visibility.Collapsed;
+            SupplierManagementButton.Visibility = Visibility.Collapsed;
+            PurchaseManagementButton.Visibility = Visibility.Collapsed;
+            PurchaseOrderButton.Visibility = Visibility.Collapsed;
+            PurchaseOrderDetailButton.Visibility = Visibility.Collapsed;
+            SalesManagementButton.Visibility = Visibility.Visible;
+            SalesOrderDetailButton.Visibility = Visibility.Collapsed;
+            ReportStatisticsButton.Visibility = Visibility.Collapsed;
+        }
+
+        // 显示默认按钮
+        private void ShowDefaultButtons()
+        {
+            UserManagementButton.Visibility = Visibility.Visible;
+            InventoryManagementButton.Visibility = Visibility.Visible;
+            BookManagementButton.Visibility = Visibility.Visible;
+            SupplierManagementButton.Visibility = Visibility.Visible;
+            PurchaseManagementButton.Visibility = Visibility.Visible;
+            PurchaseOrderButton.Visibility = Visibility.Visible;
+            PurchaseOrderDetailButton.Visibility = Visibility.Visible;
+            SalesManagementButton.Visibility = Visibility.Visible;
+            SalesOrderDetailButton.Visibility = Visibility.Visible;
+            ReportStatisticsButton.Visibility = Visibility.Visible;
+        }
+        
     }
 }
