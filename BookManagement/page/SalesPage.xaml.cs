@@ -10,13 +10,14 @@ namespace BookManagement.page
     /// <summary>
     /// Interaction logic for SalesOrderPage.xaml
     /// </summary>
-    public partial class SalesOrderPage : Page
+    public partial class SalesPage : Page
     {
         // 存储已添加的订单详情
         private List<SalesOrderService.SalesOrderDetailDTO> salesOrderDetailDTOList = new List<SalesOrderService.SalesOrderDetailDTO>();
 
-        public SalesOrderPage()
+        public SalesPage()
         {
+
             InitializeComponent();
             SalesOrderDetailGrid.ItemsSource = salesOrderDetailDTOList;
         }

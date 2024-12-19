@@ -30,6 +30,11 @@ namespace BookManagement.service
             return SalesOrderMapper.getAll();
         }
 
+        public static List<SalesOrder> GetSalesOrdersBySalespersonId(int salespersonID)
+        {
+            return SalesOrderMapper.GetSalesOrdersBySalespersonId(salespersonID);
+        }
+
         public static List<SalesOrderDetail> getSalesOrderDetailBySalesOrderId(SalesOrder salesOrder)
         {
             return SalesOrderDetailMapper.getAllBySalesOrderId(salesOrder.SalesOrderId);
@@ -121,6 +126,32 @@ namespace BookManagement.service
                 }
                
             }
+        }
+        ////////////////////////
+        public static List<CompleteSalesOrder> GetCompleteSalesOrdersByMultipleConditionsAndUserId(
+        int currentPage,
+        int pageSize,
+        int? salesOrderId,
+        string? isbn,
+        string? bookName,
+        DateOnly? startOrderDate,
+        DateOnly? endOrderDate,
+        int userId)
+        {
+            return SalesOrderMapper.GetCompleteSalesOrdersByMultipleConditionsAndUserId(
+                currentPage, pageSize, salesOrderId, isbn, bookName, startOrderDate, endOrderDate, userId);
+        }
+
+        public static int GetCompleteSalesOrderCountByUserId(
+            int? salesOrderId,
+            string? isbn,
+            string? bookName,
+            DateOnly? startOrderDate,
+            DateOnly? endOrderDate,
+            int userId)
+        {
+            return SalesOrderMapper.GetCompleteSalesOrderCountByUserId(
+                salesOrderId, isbn, bookName, startOrderDate, endOrderDate, userId);
         }
 
 
