@@ -36,14 +36,29 @@ namespace BookManagement.page
                 case "供货商管理":
                     hosFrame.Source = new Uri("SupplierManagementPage.xaml", UriKind.Relative);
                     break;
-                case "供货单信息":
+                case "进货单信息":
                     hosFrame.Source = new Uri("PurchaseOrderPage.xaml", UriKind.Relative);
                     break;
-                case "供货单明细":
+                case "进货单明细":
                     hosFrame.Source = new Uri("PurchaseOrderDetailPage.xaml", UriKind.Relative);
                     break;
-                case "用户管理":
+                case "员工管理":
                     hosFrame.Source = new Uri("UserManagementPage.xaml", UriKind.Relative);
+                    break;
+                case "库存管理":
+                    hosFrame.Source = new Uri("InventoryManagementPage.xaml", UriKind.Relative);
+                    break;
+                case "销售管理":
+                    hosFrame.Source = new Uri("SalesPage.xaml", UriKind.Relative);
+                    break;
+                case "销售单明细":
+                    hosFrame.Source = new Uri("SalesOrderDetailPage.xaml", UriKind.Relative);
+                    break;
+                case "报表中心":
+                    hosFrame.Source = new Uri("ReportStatisticsPage.xaml", UriKind.Relative);
+                    break;
+                case "进货管理":
+                    hosFrame.Source = new Uri("PurchasePage.xaml", UriKind.Relative);
                     break;
             }
         }

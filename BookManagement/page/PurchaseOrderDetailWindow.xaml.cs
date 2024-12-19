@@ -1,5 +1,4 @@
-﻿using BookManagement.entity;
-using BookManagement.service;
+﻿using BookManagement.service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,33 +11,36 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BookManagement.entity.Dto;
 using BookManagement.util;
 using System.Data;
+using BookManagement.entity;
 namespace BookManagement.page
 {
     /// <summary>
-    /// PurchaseOrderDetailPage.xaml 的交互逻辑
+    /// PurchaseOrderDetailWindow.xaml 的交互逻辑
     /// </summary>
-    public partial class PurchaseOrderDetailPage : Page
+    public partial class PurchaseOrderDetailWindow : Window
     {
         private readonly PurchaseOrderDetailService _dbOps;
         private List<PurchaseOrderDetailDto> allOrderDetails;
         private int currentPage = 1;
         private int pageSize = 15;
         private string role;
-        public PurchaseOrderDetailPage()
+        public PurchaseOrderDetailWindow(int purchaseOrderId)
         {
             InitializeComponent();
             _dbOps = new PurchaseOrderDetailService();
             int userId = (int)Session.GetCurrentUserId();
             role = UserService.GetUserById(userId).role;
+            OrderIdTextBox.Text = purchaseOrderId.ToString();
+            OrderIdTextBox.IsEnabled = false;
             LoadPurchaseOrderDetails();
         }
         private void LoadPurchaseOrderDetails()
         {
+            
             if (role == "purchaser")
             {
                 try
@@ -69,9 +71,6 @@ namespace BookManagement.page
 
             }
         }
-
-     
-
         private List<PurchaseOrderDetailDto> FilterData()
         {
             string orderId = OrderIdTextBox.Text;
@@ -95,7 +94,7 @@ namespace BookManagement.page
             }
             try
             {
-                return _dbOps.QueryPurchaseOrderDetailDtos(orderId, isbn, supplierName, supplierId, purchaserId, purchaserName, minPrice, maxPrice, startDate, endDate,currentPage,pageSize);
+                return _dbOps.QueryPurchaseOrderDetailDtos(orderId, isbn, supplierName, supplierId, purchaserId, purchaserName, minPrice, maxPrice, startDate, endDate, currentPage, pageSize);
             }
             catch (Exception e)
             {
@@ -104,7 +103,7 @@ namespace BookManagement.page
             }
         }
 
-        private int totalPages=0;
+        private int totalPages = 0;
         private void LoadPageData()
         {
             var filteredData = FilterData();

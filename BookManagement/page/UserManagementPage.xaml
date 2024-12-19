@@ -9,34 +9,55 @@
       Title="UserManagementPage">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 搜索框行，自动根据内容高度调整 -->
+            <!-- 分页按钮行 -->
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10" Grid.Row="0">
+            <TextBlock Text="用户id:" />
+            <TextBox Name="UserIdTextBox" Width="150" Margin="5" />
+            <TextBlock Text="用户名:" />
+            <TextBox Name="UsernameTextBox" Width="150" Margin="5"  />
+            <TextBlock Text="角色:" />
+            <TextBox Name="RoleTextBox" Width="150" Margin="5"  />
+
+            <Button Content="搜索" Width="100" Margin="5" Click="SearchButton_Click"/>
+        </StackPanel>
         <DataGrid Name="UserDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
-                  CanUserAddRows="False" SelectionMode="Single">
+                  CanUserAddRows="False" SelectionMode="Single" Grid.Row="1">
             <DataGrid.Columns>
                 <!-- UserId Column -->
-                <DataGridTextColumn Header="User ID" Binding="{Binding userId}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="用户id" Binding="{Binding userId}" IsReadOnly="True" Width="*"/>
 
                 <!-- UserName Column -->
-                <DataGridTextColumn Header="Username" Binding="{Binding username}" Width="*"/>
+                <DataGridTextColumn Header="用户名" Binding="{Binding username}" Width="*"/>
 
                 <!-- Role Column -->
-                <DataGridTextColumn Header="Role" Binding="{Binding role}" Width="*"/>
-                <DataGridTextColumn Header="Role" Binding="{Binding CreatedAt}" Width="*"/>
+                <DataGridTextColumn Header="角色" Binding="{Binding role}" Width="*"/>
                 <!-- Action Column with Buttons -->
-                <DataGridTemplateColumn Header="Actions" Width="Auto">
+                <DataGridTemplateColumn Header="操作" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                                 <!-- Edit Button -->
-                                <Button Content="Edit" Margin="5" Click="EditButton_Click"/>
+                                <Button Content="编辑" Margin="5" Click="EditButton_Click"/>
 
                                 <!-- Delete Button -->
-                                <Button Content="Delete" Margin="5" Click="DeleteButton_Click"/>
+                                <Button Content="删除" Margin="5" Click="DeleteButton_Click"/>
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10"  Grid.Row="2">
+            <Button Content="上一页" Click="PreviousPageButton_Click" />
+            <TextBlock Name="PageInfoText" VerticalAlignment="Center" Margin="10"/>
+            <Button Content="下一页" Click="NextPageButton_Click" />
+        </StackPanel>
     </Grid>
 </Page>
 

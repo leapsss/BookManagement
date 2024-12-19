@@ -6,30 +6,27 @@ using System.Text;
 using System.Threading.Tasks;
 using BookManagement.entity;
 using BookManagement.mapper;
+using BookManagement.entity.Dto;
 namespace BookManagement.service
 {
     internal class PurchaseOrderDetailService
     {
-        private readonly PurchaseOrderDetailMapper purchaseOrderDetailMapper;
-        public PurchaseOrderDetailService() {
-            purchaseOrderDetailMapper = new PurchaseOrderDetailMapper();
-        }
+        public PurchaseOrderDetailService() { }
         public List<PurchaseOrderDetail> GetPurchaseOrderDetails()
         {
-            return purchaseOrderDetailMapper.GetPurchaseOrderDetails();
+            return PurchaseOrderDetailMapper.GetPurchaseOrderDetails();
+        }
+        public List<PurchaseOrderDetailDto> GetPurchaseOrderDetailDtos()
+        {
+            return PurchaseOrderDetailMapper.GetPurchaseOrderDetailDtos();
         }
         public  PurchaseOrderDetail GetPurchaseOrderDetailById(int id)
         {
-            return purchaseOrderDetailMapper.GetPurchaseOrderDetailById(id);
+            return PurchaseOrderDetailMapper.GetPurchaseOrderDetailById(id);
         }
-        public List<PurchaseOrderDetail> GetPurchaseOrderDetails(string orderId, string supplierId, decimal? minPrice, decimal? maxPrice)
+        public List<PurchaseOrderDetailDto> QueryPurchaseOrderDetailDtos(string orderId, string isbn,string supplierName,string supplierId,string purchaserId,string purchaserName, decimal? minPrice, decimal? maxPrice, DateTime? startDate, DateTime? endDate,int pageIndex,int pageSize)
         {
-            return purchaseOrderDetailMapper.GetPurchaseOrderDetails()
-                .Where(po =>
-                    (string.IsNullOrEmpty(orderId) || po.PurchaseOrderId.ToString().Contains(orderId)) &&
-                    (!minPrice.HasValue || po.Price >= minPrice) &&
-                    (!maxPrice.HasValue || po.Price <= maxPrice))
-                .ToList();
+            return PurchaseOrderDetailMapper.QueryPurchaseOrderDetailDtos(orderId, isbn, supplierName, supplierId, purchaserId, purchaserName, minPrice, maxPrice, startDate, endDate,pageIndex,pageSize);
         }
     }
 }
