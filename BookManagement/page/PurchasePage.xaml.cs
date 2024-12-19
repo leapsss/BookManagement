@@ -29,6 +29,9 @@ namespace BookManagement.page
         {
             InitializeComponent();
             refreshData();
+            SupplierComboBox.ItemsSource = SupplierService.getAll();
+            SupplierComboBox.SelectedValuePath = "SupplierId";
+            SupplierComboBox.DisplayMemberPath = "SupplierName";
         }
 
         private void refreshData()
@@ -82,13 +85,18 @@ namespace BookManagement.page
                 MessageBox.Show("请添加至少一本书籍。", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+            if (SupplierComboBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("请选择一个供应商", "错误", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             try
             {
                 // 创建销售订单
                 var purchaseOrder = new PurchaseOrder
-                { 
-                    //PurchaserId = int.Parse(Session.GetCurrentUserId()),
-                    PurchaserId = 1,
+                {
+                    PurchaserId = (int)Session.GetCurrentUserId(),
+                    SupplierId = (int)SupplierComboBox.SelectedValue,
                     OrderDate = DateTime.Now
                 };
 
@@ -119,7 +127,7 @@ namespace BookManagement.page
             }
         }
 
-            private bool insertToTable(PurchaseOrderDetail purchaseOrderDetail)
+        private bool insertToTable(PurchaseOrderDetail purchaseOrderDetail)
         {
             var purchaseOrderDetailDTOToInsert = PurchaseOrderService.purchaseOrderToDTO(purchaseOrderDetail);
             if (purchaseOrderDetailDTOToInsert == null)

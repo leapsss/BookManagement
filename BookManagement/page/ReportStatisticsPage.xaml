@@ -47,9 +47,9 @@
                 <DataGridTextColumn Header="类型" Binding="{Binding OrderType}"/>
                 <DataGridTextColumn Header="订单编号" Binding="{Binding OrderId}"/>
                 <DataGridTextColumn Header="ISBN" Binding="{Binding ISBN}"/>
-                <DataGridTextColumn Header="单价" Binding="{Binding Price, StringFormat=C}"/>
+                <DataGridTextColumn Header="单价" Binding="{Binding Price}"/>
                 <DataGridTextColumn Header="数量" Binding="{Binding Quantity}"/>
-                <DataGridTextColumn Header="总金额" Binding="{Binding TotalAmount, StringFormat=C}"/>
+                <DataGridTextColumn Header="总金额" Binding="{Binding TotalAmount}"/>
             </DataGrid.Columns>
             <DataGrid.RowStyle>
                 <Style TargetType="DataGridRow">

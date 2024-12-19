@@ -37,9 +37,7 @@ namespace BookManagement.page
                 {
                     // 保存当前用户ID到 Session
                     Session.SetCurrentUserId(user.id);
-
-                    //MessageBox.Show("登录成功！");
-
+                                       
                     LayoutWindow l = new LayoutWindow();
                     l.Show();
                     this.Close();
