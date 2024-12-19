@@ -3,6 +3,7 @@ using BookManagement.service;
 using System;
 using System.Windows;
 using System.Windows.Controls;
+using static BookManagement.service.InventoryService;
 
 namespace BookManagement.page
 {
@@ -20,16 +21,47 @@ namespace BookManagement.page
         // 加载库存列表
         private void LoadInventory()
         {
-            var inventoryList = inventoryService.GetAllInventory();
+            var inventoryList = inventoryService.GetAllInventoryWithBookName();
             InventoryListView.ItemsSource = inventoryList;
         }
 
         // 查询库存
         private void SearchButton_Click(object sender, RoutedEventArgs e)
         {
-            string isbn = SearchIsbnTextBox.Text;
-            var inventory = inventoryService.GetInventoryByIsbn(isbn);
-            InventoryListView.ItemsSource = inventory != null ? new[] { inventory } : null;
+            string isbn = SearchIsbnTextBox.Text.Trim();
+
+            if (string.IsNullOrEmpty(isbn))
+            {
+                // ISBN 输入框为空，加载全部库存数据
+                LoadInventory();
+            }
+            else
+            {
+                // ISBN 输入框不为空，按 ISBN 查询特定数据
+                var inventory = inventoryService.GetInventoryByIsbn(isbn);
+
+                if (inventory != null)
+                {
+                    var bookName = inventoryService.GetBookNameByIsbn(isbn);
+                    InventoryListView.ItemsSource = new[]
+                    {
+                new InventoryDisplay
+                {
+                    InventoryId = inventory.InventoryId,
+                    Isbn = inventory.Isbn,
+                    BookName = bookName,
+                    Quantity = inventory.Quantity,
+                    LastUpdated = inventory.LastUpdated
+                }
+            };
+                }
+                else
+                {
+                    // 没有找到相关库存，清空列表并显示提示
+                    InventoryListView.ItemsSource = null;
+                    MessageBox.Show("未找到相关库存数据");
+                }
+            }
         }
 
         // 入库

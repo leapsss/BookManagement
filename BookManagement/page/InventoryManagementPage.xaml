@@ -22,6 +22,7 @@
                             <GridView>
                                 <GridViewColumn Header="库存ID" DisplayMemberBinding="{Binding InventoryId}" Width="100"/>
                                 <GridViewColumn Header="ISBN" DisplayMemberBinding="{Binding Isbn}" Width="100"/>
+                                <GridViewColumn Header="书本名" DisplayMemberBinding="{Binding BookName}" Width="100"/>
                                 <GridViewColumn Header="库存数量" DisplayMemberBinding="{Binding Quantity}" Width="100"/>
                                 <GridViewColumn Header="最后更新时间" DisplayMemberBinding="{Binding LastUpdated}" Width="150"/>
                             </GridView>
