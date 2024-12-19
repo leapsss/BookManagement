@@ -11,14 +11,16 @@ namespace BookManagement.service
 {
     class UserService
     {
+        public static User GetUserByUserIdAndPassword(string userId,string password)
+        {
+            return UserMapper.GetUserByUserIdAndPassword(userId, password);
+        }
+
         public static User GetUserById(int Id)
         {
             return UserMapper.GetUserById(Id);
         }
-        public static User GetUserByUserId(string UserId)
-        {
-            return UserMapper.GetUserByUserId(UserId);
-        }
+        
         public  List<User> GetUsers()
         {
             return UserMapper.GetUsers();

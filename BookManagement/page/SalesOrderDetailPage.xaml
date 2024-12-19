@@ -3,7 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:BookManagement.page"
+      xmlns:local="clr-namespace:BookManagement.page" xmlns:wf="http://sharpvectors.codeplex.com/svgc/"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="SalesOrderDetailPage">
@@ -13,44 +13,49 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         
         <!-- 搜索区域 -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10" Grid.Row="0">
-            <TextBlock Text="订单编号:" VerticalAlignment="Center"/>
-            <TextBox Name="OrderIdTextBox" Width="150" Margin="5"/>
-            <TextBlock Text="ISBN编码:" VerticalAlignment="Center"/>
-            <TextBox Name="SupplierIdTextBox" Width="150" Margin="5"/>
-            <Button Content="搜索" Width="100" Margin="5" Click="SearchButton_Click"/>
-        </StackPanel>        
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10" Grid.Row="1">
-            <TextBlock Text="价格区间:" VerticalAlignment="Center"/>
-            <TextBox Name="MinPriceTextBox" Width="80" Margin="5" Text="最小价格"/>
-            <TextBlock Text="—" VerticalAlignment="Center"/>
-            <TextBox Name="MaxPriceTextBox" Width="80" Margin="5" Text="最大价格"/>
+            <TextBlock Text="销售单编号:" VerticalAlignment="Center"/>
+            <TextBox Name="SalesOrderIdTextBox" Width="100" Height="20"  Margin="5"/>           
+            <TextBlock Text="ISBN:" VerticalAlignment="Center"/>
+            <TextBox Name="ISBNTextBox" Width="100" Height="20" Margin="5"/>
+            <TextBlock Text="操作人ID:" VerticalAlignment="Center"/>
+            <TextBox Name="UserIdTextBox" Width="70" Height="20" Margin="5"/>
+            <TextBlock Text="销售日期:" VerticalAlignment="Center"/>
+            <DatePicker Name="StartOrderDateTextBox" Width="100"  Margin="5"/>
+            <TextBlock Text="至" VerticalAlignment="Center"/>
+            <DatePicker Name="EndOrderDateTextBox" Width="100"  Margin="5"/>
+            <Button Width="32" Margin="5" Click="SearchButton_Click">
+                <Button.Content>
+                    <wf:SvgViewbox Source="/icon/search.svg" Width="15"/>
+                </Button.Content>
+            </Button>
         </StackPanel>
+        
         
         <!-- 数据展示区域 -->
         <DataGrid Name="CompleteSalesOrderDataGrid" AutoGenerateColumns="False" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-              CanUserAddRows="False" SelectionMode="Single" IsReadOnly="True" Grid.Row="2">
+              CanUserAddRows="False" SelectionMode="Single" IsReadOnly="True" Grid.Row="1">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="销售单编码" Binding="{Binding salesOrderId}" Width="80" />
+                <DataGridTextColumn Header="销售单编号" Binding="{Binding salesOrderId}" Width="80" />
                 <DataGridTextColumn Header="书名" Binding="{Binding bookName}" />
                 <DataGridTextColumn Header="ISBN" Binding="{Binding isbn}" Width="150" />
                 <DataGridTextColumn Header="销售日期" Binding="{Binding orderDate, StringFormat='yyyy-MM-dd'}" Width="100"/>
                 <DataGridTextColumn Header="数量" Binding="{Binding amount}" Width="50"/>
-                <DataGridTextColumn Header="售价" Binding="{Binding price}" Width="50"/>
+                <DataGridTextColumn Header="单价" Binding="{Binding price}" Width="50"/>
+                <DataGridTextColumn Header="总价" Binding="{Binding totalPrice}" Width="70"/>
                 <DataGridTextColumn Header="操作人ID" Binding="{Binding userId}" Width="80"/>
                 <DataGridTextColumn Header="操作人姓名" Binding="{Binding username}" Width="100"/>
             </DataGrid.Columns>
         </DataGrid>
 
         <!-- 分页控件 -->
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="3">
-            <Button Content="上一页" Click="PreviousPageButton_Click"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" Grid.Row="2">
+            <Button Name="PreviousPageButton" Content="上一页" Click="PreviousPageButton_Click"/>
             <TextBlock Name="PageInfoText" VerticalAlignment="Center" Margin="10"/>
-            <Button Content="下一页" Click="NextPageButton_Click"/>
+            <Button Name="NextPageButton" Content="下一页" Click="NextPageButton_Click"/>
         </StackPanel>
     </Grid>
 </Page>

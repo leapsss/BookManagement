@@ -1,16 +1,18 @@
 ﻿using BookManagement.entity;
 using BookManagement.util;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BookManagement.entity;
+
 namespace BookManagement.mapper
 {
     class UserMapper
     {
+
+        public static User? GetUserByUserIdAndPassword(string userId,string password)
+        {
+            return DatabaseService.Instance.Db.Queryable<User>()
+                                           .Where(u => u.userId == userId && u.password == password)
+                                           .First();
+        }
         public static User GetUserById(int Id)
         {
             return DatabaseService.Instance.Db.Queryable<User>()
@@ -21,7 +23,6 @@ namespace BookManagement.mapper
             return DatabaseService.Instance.Db.Queryable<User>()
                                            .First(u => u.userId == userId);
         }
-
         public static List<User> GetUsers() {
             return DatabaseService.Instance.Db.Queryable<User>().ToList();
         }
@@ -30,6 +31,7 @@ namespace BookManagement.mapper
             DatabaseService.Instance.Db.Updateable(user).ExecuteCommand();
         }
         public static void DeleteUser(string userId) {
+
             DatabaseService.Instance.Db.Deleteable<User>().Where(it => it.userId == userId).ExecuteCommand();
         }
         public static List<User> GetPagedUsers(int pageIndex, int pageSize)
@@ -39,7 +41,7 @@ namespace BookManagement.mapper
                                               .Take(pageSize)
                                               .ToList();
         }
-        public static  List<User> GetFilteredUsers(String userId,string username,string role)
+        public static  List<User> GetFilteredUsers(string userId,string username,string role)
         {
             var query = UserMapper.GetUsers().AsQueryable();
             if (!string.IsNullOrEmpty(userId))
@@ -91,6 +93,6 @@ namespace BookManagement.mapper
 
             return result;
         }
-        }
+    }
 
 }

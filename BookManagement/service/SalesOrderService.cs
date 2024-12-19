@@ -60,9 +60,24 @@ namespace BookManagement.service
             return salesOrderDetailDTO;
         }
 
-        public List<CompleteSalesOrder> getAllCompleteSalesOrder()
+        public static List<CompleteSalesOrder> getAllCompleteSalesOrder()
         {
             return SalesOrderDetailMapper.getAllCompleteSalesOrder();
+        }
+
+        public static int GetgetAllCompleteSalesOrderCount()
+        {
+            return SalesOrderDetailMapper.getAllCompleteSalesOrderCount();
+        }
+
+        public static List<CompleteSalesOrder> GetCompleteSalesOrdersByPage(int currentPage, int pageSize)
+        {
+            return SalesOrderDetailMapper.GetCompleteSalesOrdersByPage(currentPage, pageSize);
+        }
+
+        public static List<CompleteSalesOrder> GetCompleteSalesOrdersByMultipleConditions(int _currentPage, int _pageSize, int? salesOrderId,string? isbn,string? userId, DateOnly? startOrderDate,DateOnly? endOrderDate)
+        {
+            return SalesOrderDetailMapper.GetCompleteSalesOrdersByMultipleConditions(_currentPage, _pageSize, salesOrderId, isbn, userId, startOrderDate, endOrderDate);
         }
 
         public class SalesOrderDetailDTO
@@ -97,6 +112,15 @@ namespace BookManagement.service
             public decimal price { get; set; }
             public string userId { get; set; }
             public string username { get; set; }
+            public decimal totalPrice
+            {
+                set { }
+                get
+                {
+                    return amount * price;
+                }
+               
+            }
         }
 
 
