@@ -1,13 +1,11 @@
 ﻿using BookManagement.entity;
 using BookManagement.mapper;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace BookManagement.service
 {
     public class BookService
     {
         
-
         public BookService() { }
 
         public void addBook(Book book)
@@ -15,6 +13,14 @@ namespace BookManagement.service
             BookMapper.addBook(book);
         }
 
+        public void deleteBook(string isbn)
+        {
+            BookMapper.deleteBookByISBN(isbn);
+        }
+        public void updateBook(Book book)
+        {
+            BookMapper.updateBook(book);
+        }
         public Book getBookByISBN(string isbn)
         {
             Book book = BookMapper.getBookByISBN(isbn);
