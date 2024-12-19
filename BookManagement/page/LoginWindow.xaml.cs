@@ -67,6 +67,18 @@ namespace BookManagement.page
 
             return true;
         }
-
+        //调用service中的方法，通过id查询，并返回查询到的用户
+        private User getUserById(string userId)
+        {
+            try
+            {
+                return UserService.GetUserByUserId(userId);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"查询用户时出错: {ex.Message}");
+                return null;
+            }
+        }
     }
 }

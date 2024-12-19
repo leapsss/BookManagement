@@ -6,20 +6,32 @@ namespace BookManagement.mapper
 {
     class UserMapper
     {
-        public static User? getUserByUserIdAndPassword(string userId,string password)
+
+        public static User? GetUserByUserIdAndPassword(string userId,string password)
         {
             return DatabaseService.Instance.Db.Queryable<User>()
                                            .Where(u => u.userId == userId && u.password == password)
                                            .First();
         }
-        public static List<User> getUsers() {
+        public static User GetUserById(int Id)
+        {
+            return DatabaseService.Instance.Db.Queryable<User>()
+                                           .First(u => u.id == Id);
+        }
+        public static User GetUserByUserId(string userId)
+        {
+            return DatabaseService.Instance.Db.Queryable<User>()
+                                           .First(u => u.userId == userId);
+        }
+        public static List<User> GetUsers() {
             return DatabaseService.Instance.Db.Queryable<User>().ToList();
         }
-        public static void updateUser(User user)
+        public static void UpdateUser(User user)
         {
             DatabaseService.Instance.Db.Updateable(user).ExecuteCommand();
         }
-        public static void deleteUser(string userId) {
+        public static void DeleteUser(string userId) {
+
             DatabaseService.Instance.Db.Deleteable<User>().Where(it => it.userId == userId).ExecuteCommand();
         }
         public static List<User> GetPagedUsers(int pageIndex, int pageSize)
@@ -31,7 +43,7 @@ namespace BookManagement.mapper
         }
         public static  List<User> GetFilteredUsers(string userId,string username,string role)
         {
-            var query = UserMapper.getUsers().AsQueryable();
+            var query = UserMapper.GetUsers().AsQueryable();
             if (!string.IsNullOrEmpty(userId))
             {
                 if (!string.IsNullOrEmpty(userId))

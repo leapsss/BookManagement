@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using BookManagement.entity;
 using BookManagement.mapper;
+using BookManagement.repository;
+using BookManagement.util;
 namespace BookManagement.service
 {
     internal class PurchaseOrderService
@@ -24,11 +26,32 @@ namespace BookManagement.service
         {
             return PurchaseOrderMapper.GetPagedPurchaseOrders(pageIndex, pageSize);
         }
-        public List<PurchaseOrder> GetFilteredPurchaseOrders(string orderId, string supplierId, string purchaserId, DateTime? startDate, DateTime? endDate)
+        public  List<PurchaseOrder> GetPurchaseOrdersByUserId(int id)
         {
-            return PurchaseOrderMapper.GetFilteredPurchaseOrders(orderId, supplierId, purchaserId, startDate, endDate);
+            return PurchaseOrderMapper.GetPurchaseOrdersByUserId(id);
         }
-
+        public List<PurchaseOrder> GetFilteredPurchaseOrders(string orderId, string supplierId, string purchaserId, DateTime? startDate, DateTime? endDate,string purchaserName,string supplierName, int pageIndex, int pageSize)
+        {
+            return PurchaseOrderMapper.GetFilteredPurchaseOrders(orderId, supplierId, purchaserId, startDate, endDate, purchaserName, supplierName,pageIndex,pageSize);
+        }
+        public Supplier GetSupplierById(int id)
+        {
+            return SupplierMapper.getBySupplierId(id);
+        }
+        public decimal GetTotalPrice(int id)
+        {
+            List<PurchaseOrderDetail> purchaseOrderDetails=PurchaseOrderDetailMapper.GetPurchaseOrderDetailByPurchaseOrderId(id);
+            decimal totalPrice = 0;
+            foreach (PurchaseOrderDetail purchaseOrderDetail in purchaseOrderDetails)
+            {
+                totalPrice += purchaseOrderDetail.Price * purchaseOrderDetail.Amount;
+            }
+            return totalPrice;
+        }
+        public User GetUserById(int id)
+        {
+            return UserMapper.GetUserById(id);
+        }
         public static void AddPurchaseOrder(PurchaseOrder purchaseOrder, List<PurchaseOrderDetail> purchaseOrderDetails)
         {
             int id = PurchaseOrderMapper.Add(purchaseOrder);
