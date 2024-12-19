@@ -27,7 +27,7 @@ namespace BookManagement.page
 
             try
             {
-                user = UserService.getUserByUserIdAndPassword(userId, password);
+                user = UserService.GetUserByUserIdAndPassword(userId, password);
             }
             catch (Exception ex)
             {
