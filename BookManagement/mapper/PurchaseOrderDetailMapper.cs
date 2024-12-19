@@ -41,18 +41,18 @@ namespace BookManagement.mapper
             return DatabaseService.Instance.Db.Queryable<PurchaseOrderDetail>().Where(it => it.PurchaseOrderId == purchaseOrderId).ToList();
         }
         public static List<PurchaseOrderDetailDto> QueryPurchaseOrderDetailDtos(
-    string orderId,
-    string isbn,
-    string supplierName,
-    string supplierId,
-    string purchaserId,
-    string username,
-    decimal? minPrice,
-    decimal? maxPrice,
-    DateTime? startDate,
-    DateTime? endDate,
-    int pageIndex,
-    int pageSize)
+            string orderId,
+            string isbn,
+            string supplierName,
+            string supplierId,
+            string purchaserId,
+            string username,
+            decimal? minPrice,
+            decimal? maxPrice,
+            DateTime? startDate,
+            DateTime? endDate,
+            int pageIndex,
+            int pageSize)
         {
             // 定义转换后的变量
             int? orderIdInt = null;

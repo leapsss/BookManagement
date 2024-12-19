@@ -64,15 +64,15 @@ namespace BookManagement.page
                         ContractResolver = new CamelCasePropertyNamesContractResolver()
                     };
                     if (data != null) {
-                        var book = data.ToObject<Book>(JsonSerializer.Create(settings));
+                        _book = data.ToObject<Book>(JsonSerializer.Create(settings));
                                                                                         
-                        bookNameTextBox.Text = book.bookName;
-                        authorTextBox.Text = book.author;
-                        pressTextBox.Text = book.press;
-                        pressDateTextBox.Text = book.pressDate;
-                        clcNameTextBox.Text = book.clcName;
-                        priceTextBox.Text = (book.price/100m).ToString("0.00");
-                        bookDescTextBox.Text = book.bookDesc;                      
+                        bookNameTextBox.Text = _book.bookName;
+                        authorTextBox.Text = _book.author;
+                        pressTextBox.Text = _book.press;
+                        pressDateTextBox.Text = _book.pressDate;
+                        clcNameTextBox.Text = _book.clcName;
+                        priceTextBox.Text = (_book.price/100m).ToString("0.00");
+                        bookDescTextBox.Text = _book.bookDesc;                      
                     }
                     else
                     {
