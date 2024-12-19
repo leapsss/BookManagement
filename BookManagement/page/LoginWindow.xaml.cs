@@ -1,7 +1,11 @@
 ﻿using BookManagement.entity;
 using BookManagement.service;
 using BookManagement.util;
+using System.Diagnostics.Metrics;
 using System.Windows;
+
+
+
 
 namespace BookManagement.page
 {
@@ -68,7 +72,7 @@ namespace BookManagement.page
 
             if (string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("密码不能为空！");
+                MessageBox.Show("密码不能为+空！");
                 return false;
             }
 
