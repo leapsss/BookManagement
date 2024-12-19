@@ -27,7 +27,7 @@ namespace BookManagement.page
 
             try
             {
-                user = UserService.getUserByIdAndPassword(userId, password);
+                user = UserService.getUserByUserIdAndPassword(userId, password);
             }
             catch (Exception ex)
             {

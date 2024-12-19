@@ -6,7 +6,7 @@ namespace BookManagement.mapper
 {
     class UserMapper
     {
-        public static User? getUserByIdAndPassword(string userId,string password)
+        public static User? getUserByUserIdAndPassword(string userId,string password)
         {
             return DatabaseService.Instance.Db.Queryable<User>()
                                            .Where(u => u.userId == userId && u.password == password)
