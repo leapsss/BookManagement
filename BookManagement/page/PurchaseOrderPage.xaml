@@ -38,15 +38,13 @@
             <TextBox Name="SupplierNameTextBox" Width="150" Margin="5"  />
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10" Grid.Row="2">
-            <TextBlock Text="价格区间:" VerticalAlignment="Center"/>
-            <TextBlock Text="最低价格:" />
+            <TextBlock Text="最低价格:" VerticalAlignment="Center"/>
             <TextBox Name="MinPriceTextBox" Width="80" Margin="5"/>
             <TextBlock Text="—" VerticalAlignment="Center"/>
-            <TextBlock Text="最高价格:" />
+            <TextBlock Text="最高价格:" VerticalAlignment="Center"/>
             <TextBox Name="MaxPriceTextBox" Width="80" Margin="5" />
-            <TextBlock Text="开始日期:" />
+            <TextBlock Text="日期:" VerticalAlignment="Center"/>
             <DatePicker Name="StartDatePicker" Width="150" Margin="5" />
-            <TextBlock Text="结束日期:" />
             <DatePicker Name="EndDatePicker" Width="150" Margin="5" />
         </StackPanel>
         <!-- 数据展示区域 -->
