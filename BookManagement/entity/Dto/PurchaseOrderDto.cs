@@ -19,7 +19,7 @@ namespace BookManagement.entity.Dto
 
         public int PurchaserId { get; set; }
         public string PurchaserName { get; set; }
-        public decimal price { get; set; }
+        public decimal Price { get; set; }
        
     }
 }

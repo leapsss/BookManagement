@@ -24,9 +24,9 @@ namespace BookManagement.service
         {
             return PurchaseOrderDetailMapper.GetPurchaseOrderDetailById(id);
         }
-        public List<PurchaseOrderDetailDto> QueryPurchaseOrderDetailDtos(string orderId, string isbn,string supplierName,string supplierId,string purchaserId,string purchaserName, decimal? minPrice, decimal? maxPrice, DateTime? startDate, DateTime? endDate)
+        public List<PurchaseOrderDetailDto> QueryPurchaseOrderDetailDtos(string orderId, string isbn,string supplierName,string supplierId,string purchaserId,string purchaserName, decimal? minPrice, decimal? maxPrice, DateTime? startDate, DateTime? endDate,int pageIndex,int pageSize)
         {
-            return PurchaseOrderDetailMapper.QueryPurchaseOrderDetailDtos(orderId, isbn, supplierName, supplierId, purchaserId, purchaserName, minPrice, maxPrice, startDate, endDate);
+            return PurchaseOrderDetailMapper.QueryPurchaseOrderDetailDtos(orderId, isbn, supplierName, supplierId, purchaserId, purchaserName, minPrice, maxPrice, startDate, endDate,pageIndex,pageSize);
         }
     }
 }

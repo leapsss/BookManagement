@@ -39,9 +39,11 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch" Margin="10" Grid.Row="2">
             <TextBlock Text="价格区间:" VerticalAlignment="Center"/>
-            <TextBox Name="MinPriceTextBox" Width="80" Margin="5" Text="最小价格"/>
+            <TextBlock Text="最低价格:" />
+            <TextBox Name="MinPriceTextBox" Width="80" Margin="5"/>
             <TextBlock Text="—" VerticalAlignment="Center"/>
-            <TextBox Name="MaxPriceTextBox" Width="80" Margin="5" Text="最大价格"/>
+            <TextBlock Text="最高价格:" />
+            <TextBox Name="MaxPriceTextBox" Width="80" Margin="5" />
             <TextBlock Text="开始日期:" />
             <DatePicker Name="StartDatePicker" Width="150" Margin="5" />
             <TextBlock Text="结束日期:" />

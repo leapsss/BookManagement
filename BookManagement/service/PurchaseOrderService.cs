@@ -30,9 +30,9 @@ namespace BookManagement.service
         {
             return PurchaseOrderMapper.GetPurchaseOrdersByUserId(id);
         }
-        public List<PurchaseOrder> GetFilteredPurchaseOrders(string orderId, string supplierId, string purchaserId, DateTime? startDate, DateTime? endDate,string purchaserName,string supplierName)
+        public List<PurchaseOrder> GetFilteredPurchaseOrders(string orderId, string supplierId, string purchaserId, DateTime? startDate, DateTime? endDate,string purchaserName,string supplierName, int pageIndex, int pageSize)
         {
-            return PurchaseOrderMapper.GetFilteredPurchaseOrders(orderId, supplierId, purchaserId, startDate, endDate, purchaserName, supplierName);
+            return PurchaseOrderMapper.GetFilteredPurchaseOrders(orderId, supplierId, purchaserId, startDate, endDate, purchaserName, supplierName,pageIndex,pageSize);
         }
         public Supplier GetSupplierById(int id)
         {

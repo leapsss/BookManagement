@@ -40,8 +40,21 @@ namespace BookManagement.mapper
         {
             return DatabaseService.Instance.Db.Queryable<PurchaseOrderDetail>().Where(it => it.PurchaseOrderId == purchaseOrderId).ToList();
         }
-        public static List<PurchaseOrderDetailDto> QueryPurchaseOrderDetailDtos(string orderId, string isbn, string supplierName, string supplierId, string purchaserId, string username, decimal? minPrice, decimal? maxPrice, DateTime? startDate, DateTime? endDate)
+        public static List<PurchaseOrderDetailDto> QueryPurchaseOrderDetailDtos(
+    string orderId,
+    string isbn,
+    string supplierName,
+    string supplierId,
+    string purchaserId,
+    string username,
+    decimal? minPrice,
+    decimal? maxPrice,
+    DateTime? startDate,
+    DateTime? endDate,
+    int pageIndex,
+    int pageSize)
         {
+            // Start building the SQL query
             StringBuilder sql = new StringBuilder();
             sql.Append("SELECT pod.purchase_order_detail_id, pod.purchase_order_id, po.supplier_id, sp.supplier_name, ");
             sql.Append("po.purchaser_id, us.username, pod.isbn, bo.book_name, pod.amount, ");
@@ -52,7 +65,7 @@ namespace BookManagement.mapper
             sql.Append("JOIN book bo ON bo.isbn = pod.isbn ");
             sql.Append("JOIN users us ON us.id = po.purchaser_id ");
 
-            // 构建 WHERE 条件
+            // Build WHERE conditions
             List<string> conditions = new List<string>();
 
             if (!string.IsNullOrEmpty(orderId))
@@ -105,32 +118,40 @@ namespace BookManagement.mapper
                 conditions.Add("po.order_date <= @EndDate");
             }
 
-            // 如果有过滤条件，拼接 WHERE 子句
+            // If there are any filtering conditions, join them with AND
             if (conditions.Count > 0)
             {
                 sql.Append("WHERE " + string.Join(" AND ", conditions));
             }
 
-            // 执行查询
+            // Add ORDER BY clause to support pagination
+            sql.Append(" ORDER BY pod.purchase_order_detail_id ");  // Or use another column depending on your requirement
 
+            // Add pagination using OFFSET and FETCH NEXT (SQL Server syntax)
+            sql.Append(" OFFSET @Offset ROWS FETCH NEXT @PageSize ROWS ONLY");
+
+            // Execute the query using SqlSugar
             var result = DatabaseService.Instance.Db.SqlQueryable<PurchaseOrderDetailDto>(sql.ToString())
-                           .AddParameters(new
-                           {
-                               OrderId = orderId,
-                               Isbn = isbn,
-                               SupplierName = "%" + supplierName + "%",
-                               SupplierId = supplierId,
-                               PurchaserId = purchaserId,
-                               Username = "%" + username + "%",
-                               MinPrice = minPrice,
-                               MaxPrice = maxPrice,
-                               StartDate = startDate,
-                               EndDate = endDate
-                           })
-                           .ToList();
+                .AddParameters(new
+                {
+                    OrderId = orderId,
+                    Isbn = isbn,
+                    SupplierName = "%" + supplierName + "%",
+                    SupplierId = supplierId,
+                    PurchaserId = purchaserId,
+                    Username = "%" + username + "%",
+                    MinPrice = minPrice,
+                    MaxPrice = maxPrice,
+                    StartDate = startDate,
+                    EndDate = endDate,
+                    Offset = (pageIndex - 1) * pageSize,  // Calculate the offset
+                    PageSize = pageSize
+                })
+                .ToList();
 
             return result;
         }
+
         public static void Add(PurchaseOrderDetail purchaseOrderDetail)
         {
             DatabaseService.Instance.Db.Insertable(purchaseOrderDetail).ExecuteCommand();

@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BookManagement.entity.Dto;
+using BookManagement.util;
+using System.Data;
 namespace BookManagement.page
 {
     /// <summary>
@@ -26,23 +28,47 @@ namespace BookManagement.page
         private List<PurchaseOrderDetailDto> allOrderDetails;
         private int currentPage = 1;
         private int pageSize = 15;
+        private string role;
         public PurchaseOrderDetailPage()
         {
             InitializeComponent();
             _dbOps = new PurchaseOrderDetailService();
-
+            int userId = (int)Session.GetCurrentUserId();
+            role = UserService.GetUserById(userId).role;
+            LoadPurchaseOrderDetails();
             LoadPurchaseOrderDetails();
         }
         private void LoadPurchaseOrderDetails()
         {
-            try
+            if (role == "purchaser")
             {
-                allOrderDetails = _dbOps.GetPurchaseOrderDetailDtos();
-            }catch (Exception e)
-            {
-                MessageBox.Show("加载采购订单详情失败: " + e.Message);
+                try
+                {
+                    PurchaserIdTextBox.Text = Session.GetCurrentUserId().ToString();
+                    PurchaserIdTextBox.IsEnabled = false;
+                    PurchaserNameTextBox.Text = UserService.GetUserById((int)Session.GetCurrentUserId()).username;
+                    PurchaserNameTextBox.IsEnabled = false;
+                    LoadPageData();
+
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("加载采购订单详情失败: " + e.Message);
+                }
+
             }
-            LoadPageData();
+            else if (role == "admin")
+            {
+                try
+                {
+                    LoadPageData();
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("加载采购订单详情失败: " + e.Message);
+                }
+
+            }
         }
 
      
@@ -70,7 +96,7 @@ namespace BookManagement.page
             }
             try
             {
-                return _dbOps.QueryPurchaseOrderDetailDtos(orderId, isbn, supplierName, supplierId, purchaserId, purchaserName, minPrice, maxPrice, startDate, endDate);
+                return _dbOps.QueryPurchaseOrderDetailDtos(orderId, isbn, supplierName, supplierId, purchaserId, purchaserName, minPrice, maxPrice, startDate, endDate,currentPage,pageSize);
             }
             catch (Exception e)
             {
