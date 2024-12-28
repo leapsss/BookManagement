@@ -8,9 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="InventoryManagementPage">
     <Grid>
-        <TabControl>
-            <!-- 数据展示 Tab -->
-            <TabItem Header="库存列表">
+       
                 <StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="10">
                         <TextBox x:Name="SearchIsbnTextBox" Width="300" ToolTip="输入ISBN查询" />
@@ -29,21 +27,6 @@
                         </ListView.View>
                     </ListView>
                 </StackPanel>
-            </TabItem>
-
-            <!-- 库存管理 Tab -->
-            <TabItem Header="库存管理">
-                <StackPanel Margin="10">
-                    <TextBlock Text="ISBN" Margin="5"/>
-                    <TextBox x:Name="IsbnTextBox" Margin="5"/>
-
-                    <TextBlock Text="数量" Margin="5"/>
-                    <TextBox x:Name="QuantityTextBox" Margin="5"/>
-
-                    <Button Content="入库" Width="100" Height="30" Margin="10" Click="AddInventoryButton_Click"/>
-                    <Button Content="出库" Width="100" Height="30" Margin="10" Click="RemoveInventoryButton_Click"/>
-                </StackPanel>
-            </TabItem>
-        </TabControl>
+        
     </Grid>
 </Page>

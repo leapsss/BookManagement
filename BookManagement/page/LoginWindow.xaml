@@ -17,3 +17,4 @@
         <Label x:Name="LabelTitle" Content="图书进销存管理系统" HorizontalAlignment="Center" Margin="0,35,0,0" VerticalAlignment="Top" Background="{DynamicResource {x:Static SystemColors.MenuBarBrushKey}}" Width="231" Height="50" FontSize="24"/>
     </Grid>
 </Window>
+

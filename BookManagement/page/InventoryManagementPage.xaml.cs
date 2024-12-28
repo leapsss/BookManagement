@@ -65,7 +65,7 @@ namespace BookManagement.page
         }
 
         // 入库
-        private void AddInventoryButton_Click(object sender, RoutedEventArgs e)
+       /* private void AddInventoryButton_Click(object sender, RoutedEventArgs e)
         {
             string isbn = IsbnTextBox.Text;
             if (int.TryParse(QuantityTextBox.Text, out int quantity))
@@ -120,6 +120,6 @@ namespace BookManagement.page
             {
                 MessageBox.Show("请输入有效的数量");
             }
-        }
+        }*/
     }
 }
