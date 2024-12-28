@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
         
         <Grid Grid.Row="0">
-            <TextBlock Text="销售订单管理" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
+            <TextBlock Text="书籍管理" FontSize="24" FontWeight="Bold" VerticalAlignment="Center"/>
         </Grid>
 
         <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,20">

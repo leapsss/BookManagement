@@ -66,7 +66,7 @@ namespace BookManagement.page
 
             if (string.IsNullOrEmpty(password))
             {
-                MessageBox.Show("密码不能为+空！");
+                MessageBox.Show("密码不能为空！");
                 return false;
             }
 

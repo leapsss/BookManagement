@@ -55,6 +55,12 @@ namespace BookManagement.page
                 case "进货管理":
                     hosFrame.Source = new Uri("PurchasePage.xaml", UriKind.Relative);
                     break;
+                case "登出":
+                    Session.Clear();
+                    LoginWindow l = new LoginWindow();
+                    l.Show();
+                    this.Close();
+                    break;
             }
         }
 
